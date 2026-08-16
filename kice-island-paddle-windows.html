@@ -205,7 +205,7 @@ async function load(){
   try{
     const hilo = await fetchNOAA({
       product:'predictions', application:'kice_paddle', begin_date: dateStr(0),
-      end_date: dateStr(7), datum:'MLLW', station: STATION, time_zone:'lst_ld',
+      end_date: dateStr(7), datum:'MLLW', station: STATION, time_zone:'lst_ldt',
       units:'english', interval:'hilo', format:'json'
     });
 
