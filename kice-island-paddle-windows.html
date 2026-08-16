@@ -185,7 +185,9 @@ function fmtDay(d){
 }
 
 async function fetchNOAA(params){
-  const url = 'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' + new URLSearchParams(params).toString();
+  const target = 'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' + new URLSearchParams(params).toString();
+  const url = 'https;//api.allorigins.win/raw?
+    url=' + encodeURIComponent(target);
   const res = await fetch(url);
   const json = await res.json();
   if(json.error) throw new Error(json.error.message);
