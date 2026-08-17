@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caxambas Pass → Kice Island Paddle Windows</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --deep: #0A2733;
+    --deep-2: #0F3444;
+    --teal: #4AB8AE;
+    --sand: #E8D9B8;
+    --foam: #F4F7F5;
+    --foam-dim: #B9CBCE;
+    --amber: #E0955C;
+    --line: rgba(244,247,245,0.10);
+    --good: #6FC49B;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(74,184,174,0.16), transparent 55%),
+      radial-gradient(ellipse at 85% 110%, rgba(224,149,92,0.10), transparent 50%),
+      linear-gradient(180deg, var(--deep) 0%, var(--deep-2) 100%);
+    color: var(--foam);
+    font-family: 'Inter', sans-serif;
+    display:flex;
+    justify-content:center;
+    padding: 40px 20px 60px;
+  }
+  .wrap{ width:100%; max-width: 720px; }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{ width:6px;height:6px;border-radius:50%; background: var(--teal); box-shadow: 0 0 8px var(--teal); }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight: 500;
+    font-size: 30px;
+    letter-spacing: -0.01em;
+    margin: 6px 0 4px;
+  }
+  .sub{ color: var(--foam-dim); font-size: 13.5px; margin-bottom: 8px; }
+  .route-note{
+    font-size: 13px;
+    color: var(--foam-dim);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 18px 0 30px;
+    line-height: 1.5;
+  }
+  .route-note b{ color: var(--sand); font-weight:600; }
+
+  .day{
+    margin-bottom: 22px;
+  }
+  .day-label{
+    font-family:'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--foam-dim);
+    margin-bottom: 10px;
+    padding-left: 2px;
+  }
+  .window{
+    display:flex;
+    align-items:center;
+    gap: 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.02);
+    margin-bottom: 10px;
+  }
+  .window.best{ border-color: rgba(111,196,155,0.4); background: rgba(111,196,155,0.05); }
+  .badge{
+    font-family:'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge.gentle{ background: rgba(111,196,155,0.16); color: var(--good); }
+  .badge.moderate{ background: rgba(74,184,174,0.16); color: var(--teal); }
+  .badge.brisk{ background: rgba(224,149,92,0.16); color: var(--amber); }
+  .tide-tag{
+    font-family:'Space Mono', monospace;
+    font-size: 9.5px;
+    color: var(--foam-dim);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .win-time{
+    font-family:'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    flex: 1;
+  }
+  .win-note{
+    font-size: 12px;
+    color: var(--foam-dim);
+    margin-top: 2px;
+  }
+  .partial-tag{
+    font-family:'Space Mono', monospace;
+    font-size: 9.5px;
+    color: var(--foam-dim);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .tags{ display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+
+  .footer{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size: 11.5px; color: var(--foam-dim);
+    font-family:'Space Mono', monospace;
+    border-top: 1px solid var(--line);
+    padding-top: 16px; margin-top: 10px;
+  }
+  .refresh-btn{
+    background:none; border: 1px solid var(--line); color: var(--foam-dim);
+    font-family:'Space Mono', monospace; font-size: 11px;
+    padding: 6px 12px; border-radius: 20px; cursor:pointer;
+  }
+  .refresh-btn:hover{ border-color: var(--teal); color: var(--teal); }
+  .state-msg{ padding: 60px 10px; text-align:center; color: var(--foam-dim); font-size: 13.5px; }
+  .state-msg .spinner{
+    width:20px;height:20px;border-radius:50%;
+    border: 2px solid var(--line); border-top-color: var(--teal);
+    margin: 0 auto 14px; animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ .state-msg .spinner{ animation:none; } }
+  @media (max-width: 480px){
+    .window{ flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow"><span class="dot"></span>NOAA Station 8724967 &middot; Caxambas Pass</div>
+  <h1>Kice Island Paddle Windows</h1>
+  <div class="sub">Best 2-hour stretches to cross — optimized for calm, easy current</div>
+  <div class="route-note">
+    Current runs weakest near <b>slack water</b> — the hour or so on either side of a high or low tide — and strongest at mid-tide. Windows below are centered on slack water and sized by how fast the current builds afterward: a <b>gentle</b> day (small swing between tides) gives a wide, relaxed window; a day where the tide swings a lot gets a tighter window so you're not caught out once the current picks up.
+  </div>
+
+  <div id="content"><div class="state-msg"><div class="spinner"></div>Reading the tide tables&hellip;</div></div>
+
+  <div class="footer">
+    <span id="asof">&mdash;</span>
+    <button class="refresh-btn" id="refreshBtn">refresh</button>
+  </div>
+</div>
+
+<script>
+const STATION = '8724967';
+const LAT = 25.9184, LNG = -81.7284; // Caxambas Pass entrance
+const TZ = 'America/New_York';
+
+function dateStr(offsetDays){
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtTime(d){
+  return d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit', timeZone: TZ });
+}
+function fmtDay(d){
+  return d.toLocaleDateString('en-US', { weekday:'long', month:'short', day:'numeric', timeZone: TZ });
+}
+
+async function fetchNOAA(params){
+  const target = 'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' + new URLSearchParams(params).toString();
+  const url = 'https://corsproxy.io/?url=' + encodeURIComponent(target);
+  const res = await fetch(url);
+  const json = await res.json();
+  if(json.error) throw new Error(json.error.message);
+  return json;
+}
+async function fetchSun(dateIso){
+  const url = `https://api.sunrise-sunset.org/json?lat=${LAT}&lng=${LNG}&date=${dateIso}&formatted=0&tzid=${TZ}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return { sunrise: new Date(json.results.sunrise), sunset: new Date(json.results.sunset) };
+}
+
+// How fast current builds after a given slack point, based on the tidal
+// swing to its neighboring extremes. Smaller swing = gentler, gives a wider window.
+function classifySwing(range){
+  if(range < 1.3) return { label: 'gentle', cls: 'gentle', windowMin: 90 };
+  if(range < 2.2) return { label: 'moderate', cls: 'moderate', windowMin: 60 };
+  return { label: 'builds quickly', cls: 'brisk', windowMin: 40 };
+}
+
+async function load(){
+  const content = document.getElementById('content');
+  const asof = document.getElementById('asof');
+  try{
+    const hilo = await fetchNOAA({
+      product:'predictions', application:'kice_paddle', begin_date: dateStr(0),
+      end_date: dateStr(7), datum:'MLLW', station: STATION, time_zone:'lst_ldt',
+      units:'english', interval:'hilo', format:'json'
+    });
+
+    const allEvents = hilo.predictions.map(p => ({
+      t: new Date(p.t.replace(' ','T')),
+      v: parseFloat(p.v),
+      type: p.type === 'H' ? 'high' : 'low'
+    }));
+
+    const events = allEvents.filter(e => e.t > new Date());
+
+    // group by day
+    const byDay = {};
+    events.forEach(e => {
+      const key = e.t.toDateString();
+      (byDay[key] = byDay[key] || []).push(e);
+    });
+
+    const dayKeys = Object.keys(byDay).slice(0, 6);
+    let html = '';
+
+    for(const key of dayKeys){
+      const dayEvents = byDay[key];
+      const sample = dayEvents[0].t;
+      const dIso = `${sample.getFullYear()}-${String(sample.getMonth()+1).padStart(2,'0')}-${String(sample.getDate()).padStart(2,'0')}`;
+      let sun;
+      try{ sun = await fetchSun(dIso); } catch(e){ sun = null; }
+
+      let dayHtml = '';
+      let any = false;
+
+      for(const ev of dayEvents){
+        // find this event's index in the full chronological list to get neighbors
+        const idx = allEvents.findIndex(e => e.t.getTime() === ev.t.getTime());
+        const prev = idx > 0 ? allEvents[idx - 1] : null;
+        const next = idx < allEvents.length - 1 ? allEvents[idx + 1] : null;
+        const swings = [];
+        if(prev) swings.push(Math.abs(ev.v - prev.v));
+        if(next) swings.push(Math.abs(ev.v - next.v));
+        const range = swings.length ? swings.reduce((a,b)=>a+b,0) / swings.length : 2.0;
+        const swing = classifySwing(range);
+
+        const winStart = new Date(ev.t.getTime() - swing.windowMin*60000);
+        const winEnd = new Date(ev.t.getTime() + swing.windowMin*60000);
+
+        let effStart = winStart, effEnd = winEnd, partial = false;
+        if(sun){
+          if(winEnd <= sun.sunrise || winStart >= sun.sunset) continue; // fully in the dark
+          effStart = winStart < sun.sunrise ? sun.sunrise : winStart;
+          effEnd = winEnd > sun.sunset ? sun.sunset : winEnd;
+          if((effEnd - effStart) < 60*60000) partial = true;
+        }
+
+        any = true;
+        const isBest = swing.cls === 'gentle';
+        dayHtml += `
+          <div class="window ${isBest ? 'best' : ''}">
+            <span class="badge ${swing.cls}">${swing.label}</span>
+            <div>
+              <div class="win-time">${fmtTime(effStart)} – ${fmtTime(effEnd)}</div>
+              <div class="win-note">Slack ${ev.type} &middot; current builds gradually outside this window</div>
+            </div>
+            <div class="tags">
+              <span class="tide-tag">${ev.type === 'high' ? 'high tide' : 'low tide'}</span>
+              ${partial ? '<span class="partial-tag">trimmed to daylight</span>' : ''}
+            </div>
+          </div>`;
+      }
+
+      if(any){
+        html += `<div class="day"><div class="day-label">${fmtDay(sample)}</div>${dayHtml}</div>`;
+      }
+    }
+
+    content.innerHTML = html || `<div class="state-msg">No daylight slack-water windows found in the next few days — check back.</div>`;
+    asof.textContent = `as of ${fmtTime(new Date())} ET`;
+  }catch(err){
+    content.innerHTML = `<div class="state-msg">Couldn't reach NOAA right now.<br>Try refresh in a moment.</div>`;
+    asof.textContent = 'connection issue';
+    console.error(err);
+  }
+}
+
+document.getElementById('refreshBtn').addEventListener('click', load);
+load();
+</script>
+</body>
+</html>
