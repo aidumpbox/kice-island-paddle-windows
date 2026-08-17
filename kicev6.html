@@ -481,11 +481,7 @@
     <span class="fine">Current isn't directly measured at this pass (no NOAA current station nearby) &mdash; window sizing is a physically-motivated estimate from tide height data, not a measurement. Treat tight windows and "brisk" days with extra caution, and calibrate your own judgment against conditions you actually observe on the water.</span>
   </div>
 
-  <div class="profiles" id="profiles">
-    <button class="profile-btn" data-profile="cautious">cautious</button>
-    <button class="profile-btn" data-profile="standard">standard</button>
-    <button class="profile-btn" data-profile="experienced">experienced</button>
-  </div>
+
 
   <div id="advisoryBox"></div>
   <div id="weekPlanner"></div>
@@ -523,10 +519,11 @@ const CACHE_TTL_MS = 10 * 60 * 1000;        // 10 min session cache
 const CACHE_KEY = 'kice-v4-cache';
 
 // Comfort profiles: how much wind / current-build rate / storm risk we'll tolerate
-const PROFILES = {
-  cautious:    { label:'Cautious',    windWarn:12, gustWarn:16, rateCap:0.10, precipWarn:30 },
-  standard:    { label:'Standard',    windWarn:15, gustWarn:20, rateCap:0.15, precipWarn:40 },
-  experienced: { label:'Experienced', windWarn:20, gustWarn:26, rateCap:0.22, precipWarn:55 }
+const PROFILE = {
+  windWarn: 15,
+  gustWarn: 20,
+  rateCap: 0.15,
+  precipWarn: 40
 };
 let currentProfile = localStorage.getItem('kice-profile') || 'standard';
 
@@ -828,7 +825,7 @@ function activeAdvisoryAt(advisories, start, end){
 
 function render(){
   if(!RAW) return;
-  const profile = PROFILES[currentProfile];
+const profile = PROFILE;
 
   const { points, rates, weatherByHour, sunByDate, advisories } = RAW;
 
