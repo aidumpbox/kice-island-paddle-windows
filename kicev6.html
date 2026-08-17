@@ -68,7 +68,6 @@
   .route-note .fine{ display:block; margin-top:8px; font-size:11px; color: var(--foam-dim); opacity:0.75; }
 
   /* profile toggle */
-  .profile-btn:hover{ border-color: var(--teal); color: var(--teal); }
 
   /* advisory banner */
   .advisory{
@@ -217,254 +216,9 @@
   }
   @keyframes spin{ to{ transform: rotate(360deg); } }
 
-
-  /* Week-ahead planner */
-  .week-planner{ margin:0 0 24px; }
-  .week-planner-head{
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:10px;
-  }
-  .week-planner-title{
-    font-family:'Fraunces',serif;
-    font-size:21px;
-  }
-  .week-planner-sub{
-    font-size:10px;
-    color:var(--foam-dim);
-    margin-top:3px;
-  }
-  .week-nav{
-    display:flex;
-    gap:6px;
-  }
-  .week-nav button{
-    border:1px solid var(--line);
-    border-radius:8px;
-    background:rgba(255,255,255,.03);
-    color:var(--foam);
-    padding:7px 10px;
-    font-family:'Space Mono',monospace;
-    font-size:9px;
-    cursor:pointer;
-  }
-  .week-nav button:hover{ border-color:rgba(111,196,155,.45); }
-  .week-days{
-    display:grid;
-    grid-template-columns:repeat(7,minmax(0,1fr));
-    gap:6px;
-  }
-  .week-day{
-    border:1px solid var(--line);
-    border-radius:11px;
-    padding:10px 8px;
-    background:rgba(255,255,255,.018);
-    cursor:pointer;
-    min-width:0;
-  }
-  .week-day.active{
-    border-color:rgba(111,196,155,.5);
-    background:rgba(111,196,155,.06);
-  }
-  .week-day.today{ box-shadow:inset 0 -2px 0 var(--teal); }
-  .week-day-name{
-    font-family:'Space Mono',monospace;
-    font-size:8px;
-    text-transform:uppercase;
-    color:var(--foam-dim);
-  }
-  .week-day-date{
-    font-family:'Fraunces',serif;
-    font-size:16px;
-    margin-top:3px;
-  }
-  .week-day-count{
-    margin-top:7px;
-    font-size:9px;
-    color:var(--foam-dim);
-  }
-  .week-day-best{
-    margin-top:4px;
-    font-size:9px;
-    color:var(--good);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .week-planner-detail{
-    margin-top:10px;
-  }
-
-  @media (max-width: 650px){
-    .week-days{ grid-template-columns:repeat(4,minmax(0,1fr)); }
-    .week-day:nth-child(n+5){ display:none; }
-  }
-
-  /* =========================================================
-     DAILY FORECAST
-     ========================================================= */
-  .daily-forecast{ margin:0 0 28px; }
-  .daily-hero{
-    border:1px solid rgba(111,196,155,0.28);
-    border-radius:16px;
-    padding:20px;
-    background:rgba(111,196,155,0.045);
-  }
-  .daily-kicker{
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:var(--teal);
-    margin-bottom:5px;
-  }
-  .daily-date{
-    font-family:'Fraunces',serif;
-    font-size:23px;
-    margin-bottom:17px;
-  }
-  .daily-best-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .daily-best-card{
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:14px;
-    background:rgba(255,255,255,.025);
-  }
-  .daily-best-card.primary{ border-color:rgba(111,196,155,.35); }
-  .daily-best-label{
-    font-family:'Space Mono',monospace;
-    font-size:9.5px;
-    letter-spacing:.07em;
-    text-transform:uppercase;
-    color:var(--foam-dim);
-    margin-bottom:7px;
-  }
-  .daily-best-time{ font-family:'Fraunces',serif; font-size:18px; }
-  .daily-best-quality{ font-size:11px; color:var(--good); margin-top:4px; }
-  .daily-best-status{ font-size:10.5px; color:var(--foam-dim); margin-top:7px; line-height:1.4; }
-
-  .day-timeline{
-    margin-top:12px;
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:16px 16px 13px;
-    background:rgba(255,255,255,.02);
-  }
-  .timeline-title{
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    letter-spacing:.09em;
-    text-transform:uppercase;
-    color:var(--foam-dim);
-    margin-bottom:18px;
-  }
-  .timeline-track{
-    position:relative;
-    height:34px;
-    margin:0 2px 22px;
-    border-radius:8px;
-    background:rgba(255,255,255,.055);
-  }
-  .timeline-window{
-    position:absolute;
-    top:6px;
-    height:22px;
-    min-width:3px;
-    border-radius:5px;
-    background:var(--good);
-    opacity:.9;
-  }
-  .timeline-window.moderate{ background:var(--teal); }
-  .timeline-window.brisk{ background:var(--amber); }
-  .timeline-window.passed{ opacity:.25; }
-  .timeline-window.current{ opacity:1; box-shadow:0 0 0 2px rgba(244,247,245,.55); }
-  .timeline-now{
-    position:absolute;
-    top:-8px;
-    bottom:-8px;
-    width:2px;
-    background:var(--foam);
-    z-index:3;
-  }
-  .timeline-now::before{
-    content:'NOW';
-    position:absolute;
-    top:-15px;
-    left:50%;
-    transform:translateX(-50%);
-    font-family:'Space Mono',monospace;
-    font-size:8px;
-    letter-spacing:.08em;
-    color:var(--foam);
-  }
-  .timeline-labels{
-    display:flex;
-    justify-content:space-between;
-    font-family:'Space Mono',monospace;
-    font-size:8px;
-    color:var(--foam-dim);
-    opacity:.7;
-  }
-
-  .daily-section{ margin-top:18px; }
-  .daily-section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    margin-bottom:7px;
-  }
-  .daily-section-head strong{
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-  }
-  .daily-section-head span{ font-size:10px; color:var(--foam-dim); }
-  .daily-row{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    border:1px solid var(--line);
-    border-radius:11px;
-    padding:10px 12px;
-    margin-bottom:6px;
-    background:rgba(255,255,255,.018);
-  }
-  .daily-row.passed{ opacity:.48; }
-  .daily-row.current{ border-color:rgba(111,196,155,.45); background:rgba(111,196,155,.055); }
-  .daily-row-time{ font-family:'Fraunces',serif; font-size:16px; flex:1; }
-  .daily-row-meta{ font-size:9.5px; color:var(--foam-dim); margin-top:2px; }
-  .daily-row-quality{ font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; white-space:nowrap; }
-
-  .daily-summary{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:6px;
-    margin-top:12px;
-  }
-  .daily-stat{
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:9px 6px;
-    text-align:center;
-    background:rgba(255,255,255,.018);
-  }
-  .daily-stat-value{ display:block; font-family:'Space Mono',monospace; font-size:13px; }
-  .daily-stat-label{
-    display:block;
-    margin-top:3px;
-    font-family:'Space Mono',monospace;
-    font-size:7.5px;
-    text-transform:uppercase;
-    color:var(--foam-dim);
-  }
-
+  .week-planner{margin:0 0 20px}.week-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.week-day{appearance:none;width:100%;text-align:left;background:rgba(255,255,255,.02);color:var(--foam);border:1px solid var(--line);border-radius:10px;padding:10px 8px;cursor:pointer;font:inherit}.week-day.active{border-color:var(--teal);background:rgba(74,184,174,.08)}.week-day.today{box-shadow:inset 0 -2px 0 var(--teal)}.week-day-name{font-family:'Space Mono',monospace;font-size:8px;color:var(--foam-dim);text-transform:uppercase}.week-day-date{font-family:'Fraunces',serif;font-size:16px;margin-top:3px}.week-day-count{font-size:9px;color:var(--foam-dim);margin-top:6px}.week-day-best{font-size:9px;color:var(--good);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.daily-forecast{margin:0 0 18px;border:1px solid var(--line);border-radius:14px;padding:16px;background:rgba(255,255,255,.018)}.daily-kicker{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}.daily-title{font-family:'Fraunces',serif;font-size:22px;margin:4px 0 12px}.daily-best{display:grid;grid-template-columns:1fr 1fr;gap:8px}.daily-card{border:1px solid var(--line);border-radius:10px;padding:11px}.daily-card strong{display:block;font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;color:var(--foam-dim);margin-bottom:5px}.daily-card b{font-family:'Fraunces',serif;font-size:17px}.daily-card small{display:block;color:var(--foam-dim);font-size:9px;margin-top:4px}.daily-passed{opacity:.5}.daily-current{border-color:var(--teal)}@media(max-width:650px){.week-days{grid-template-columns:repeat(4,1fr)}.week-day:nth-child(n+5){display:none}.daily-best{grid-template-columns:1fr}}
   @media (prefers-reduced-motion: reduce){ .state-msg .spinner{ animation:none; } }
   @media (max-width: 480px){
-    .daily-best-grid{ grid-template-columns:1fr; }
-    .daily-summary{ grid-template-columns:repeat(2,1fr); }
     .window{ flex-wrap: wrap; }
     .ws-pick{ flex-wrap: wrap; }
     .ws-pick .ws-note{ margin-left:0; }
@@ -481,11 +235,8 @@
     <span class="fine">Current isn't directly measured at this pass (no NOAA current station nearby) &mdash; window sizing is a physically-motivated estimate from tide height data, not a measurement. Treat tight windows and "brisk" days with extra caution, and calibrate your own judgment against conditions you actually observe on the water.</span>
   </div>
 
-
-
   <div id="advisoryBox"></div>
   <div id="weekPlanner"></div>
-  <div id="dailyForecast"></div>
   <div id="weekStrip"></div>
   <div id="content"><div class="state-msg"><div class="spinner"></div>Reading the tide tables&hellip;</div></div>
 
@@ -518,14 +269,8 @@ const DAYS_AHEAD = 7;
 const CACHE_TTL_MS = 10 * 60 * 1000;        // 10 min session cache
 const CACHE_KEY = 'kice-v4-cache';
 
-// Comfort profiles: how much wind / current-build rate / storm risk we'll tolerate
-const PROFILE = {
-  windWarn: 15,
-  gustWarn: 20,
-  rateCap: 0.15,
-  precipWarn: 40
-};
-let currentProfile = localStorage.getItem('kice-profile') || 'standard';
+// Single assessment model. Former Cautious / Standard / Experienced profiles removed.
+const PROFILE = { windWarn:15, gustWarn:20, rateCap:0.15, precipWarn:40 };
 
 /* ---------------------------------------------------------------------
    TIME / FORMAT HELPERS
@@ -825,21 +570,19 @@ function activeAdvisoryAt(advisories, start, end){
 
 function render(){
   if(!RAW) return;
-const profile = PROFILE;
-
+  const profile = PROFILE;
   const { points, rates, weatherByHour, sunByDate, advisories } = RAW;
-
-  // advisory banner (only show ones active now or starting within window)
-  const advisoryBox = document.getElementById('advisoryBox');
-  const liveAdvisories = advisories.filter(a => !a.ends || a.ends > new Date());
-  advisoryBox.innerHTML = liveAdvisories.map(a => `
-    <div class="advisory">
-      <div class="adv-title"><span class="warn-dot"></span>${a.event}</div>
-      ${a.headline || 'Active marine advisory for this zone — check the full NWS forecast before heading out.'}
-    </div>`).join('');
-
   const now = new Date();
-  const slackEvents = findSlackEvents(points, rates);
+  const today = isoDateOf(now);
+
+  const advisoryBox = document.getElementById('advisoryBox');
+  const liveAdvisories = advisories.filter(a => !a.ends || a.ends > now);
+  advisoryBox.innerHTML = liveAdvisories.map(a => `
+    <div class="advisory"><div class="adv-title"><span class="warn-dot"></span>${a.event}</div>
+    ${a.headline || 'Active marine advisory for this zone — check the full NWS forecast before heading out.'}</div>`).join('');
+
+  // Keep every window from today's calendar day, including windows that have passed.
+  const slackEvents = findSlackEvents(points, rates).filter(e => isoDateOf(e.t) >= today);
   const dayKeys = [];
   const byDay = {};
   const allWindows = [];
@@ -850,399 +593,81 @@ const profile = PROFILE;
     const win = windowForSlack(points, rates, ev.idx, profile.rateCap);
     let start = win.start, end = win.end, partial = false;
     if(sun){
-      if(end <= sun.sunrise || start >= sun.sunset) continue; // fully in the dark
+      if(end <= sun.sunrise || start >= sun.sunset) continue;
       start = start < sun.sunrise ? sun.sunrise : start;
       end = end > sun.sunset ? sun.sunset : end;
       if((end-start) < 60*60000) partial = true;
     }
-
-    const totalMin = (win.end - win.start)/60000;
-    const swing = classifyWidth(totalMin);
-    const weather = summarizeWindow(weatherByHour, start, end);
-    const isWindy = weather.found && (weather.maxSpeed >= profile.windWarn || weather.maxGust >= profile.gustWarn);
-    const isStormy = weather.found && weather.maxPrecip >= profile.precipWarn;
-    const isHot = weather.found && weather.maxTemp >= 92;
-    const advisory = activeAdvisoryAt(advisories, start, end);
-
-    // flow direction: at a HIGH slack, current turns from flood to ebb; at LOW, ebb to flood
-    const flowTo = ev.type === 'high' ? CHANNEL_EBB_BEARING_DEG : (CHANNEL_EBB_BEARING_DEG + 180) % 360;
-    let alignment = null;
-    if(weather.found && weather.avgDir !== null){
-      const windBlowingTo = (weather.avgDir + 180) % 360;
-      const diff = angleDiff(windBlowingTo, flowTo);
-      alignment = diff < 55 ? 'with' : (diff > 125 ? 'against' : 'cross');
+    const totalMin=(win.end-win.start)/60000;
+    const swing=classifyWidth(totalMin);
+    const weather=summarizeWindow(weatherByHour,start,end);
+    const isWindy=weather.found && (weather.maxSpeed>=profile.windWarn || weather.maxGust>=profile.gustWarn);
+    const isStormy=weather.found && weather.maxPrecip>=profile.precipWarn;
+    const isHot=weather.found && weather.maxTemp>=92;
+    const advisory=activeAdvisoryAt(advisories,start,end);
+    const flowTo=ev.type==='high'?CHANNEL_EBB_BEARING_DEG:(CHANNEL_EBB_BEARING_DEG+180)%360;
+    let alignment=null;
+    if(weather.found && weather.avgDir!==null){
+      const windBlowingTo=(weather.avgDir+180)%360;
+      const diff=angleDiff(windBlowingTo,flowTo);
+      alignment=diff<55?'with':(diff>125?'against':'cross');
     }
+    let score=Math.min(totalMin/180,1)*40;
+    if(weather.found){score-=Math.max(0,weather.maxSpeed-profile.windWarn)*2;score-=Math.max(0,weather.maxGust-profile.gustWarn)*1.5;score-=isStormy?25:0;score+=alignment==='with'?5:(alignment==='against'?-12:0)}
+    if(advisory)score-=200;if(partial)score-=5;
+    const isBest=swing.cls==='gentle'&&!isWindy&&!isStormy&&!advisory;
+    const w={ev,start,end,swing,weather,isWindy,isStormy,isHot,advisory,alignment,partial,score,isBest,iso};
+    allWindows.push(w);(byDay[iso]=byDay[iso]||[]).push(w);if(!dayKeys.includes(iso))dayKeys.push(iso);
+  }
 
-    // score: higher is better. Advisory active essentially disqualifies.
-    let score = Math.min(totalMin/180, 1) * 40;
-    if(weather.found){
-      score -= Math.max(0, weather.maxSpeed - profile.windWarn) * 2;
-      score -= Math.max(0, weather.maxGust - profile.gustWarn) * 1.5;
-      score -= isStormy ? 25 : 0;
-      score += alignment === 'with' ? 5 : (alignment === 'against' ? -12 : 0);
+  const weekPlanner=document.getElementById('weekPlanner');
+  const days=dayKeys.slice(0,7);
+  let selected=weekPlanner.dataset.selected || today;
+  if(!days.includes(selected)) selected=days[0] || today;
+  weekPlanner.dataset.selected=selected;
+  weekPlanner.innerHTML=days.map(iso=>{
+    const d=new Date(iso+'T12:00:00'), list=byDay[iso]||[], best=[...list].sort((a,b)=>b.score-a.score)[0];
+    return `<button class="week-day ${iso===selected?'active':''} ${iso===today?'today':''}" data-day="${iso}">
+      <div class="week-day-name">${iso===today?'Today':d.toLocaleDateString([], {weekday:'short'})}</div>
+      <div class="week-day-date">${d.toLocaleDateString([], {month:'short',day:'numeric'})}</div>
+      <div class="week-day-count">${list.length} window${list.length===1?'':'s'}</div>
+      <div class="week-day-best">${best?best.swing.label:'No window'}</div>
+    </button>`;
+  }).join('');
+  weekPlanner.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{weekPlanner.dataset.selected=b.dataset.day;render();});
+
+  const selectedWindows=(byDay[selected]||[]).slice().sort((a,b)=>a.start-b.start);
+  const best=[...selectedWindows].sort((a,b)=>b.score-a.score)[0];
+  const remaining=selected===today?selectedWindows.filter(w=>w.end>now):selectedWindows;
+  const bestRemaining=remaining.length?[...remaining].sort((a,b)=>b.score-a.score)[0]:null;
+  const d=new Date(selected+'T12:00:00');
+  const selectedTitle=selected===today?'Today':d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'});
+  const card=(label,w)=>w?`<div class="daily-card"><strong>${label}</strong><b>${fmtTime(w.start)} – ${fmtTime(w.end)}</b><small>${w.swing.label} · ${Math.round((w.end-w.start)/60000)} min</small></div>`:`<div class="daily-card"><strong>${label}</strong><b>None</b><small>No qualifying window remains.</small></div>`;
+  document.getElementById('weekStrip').innerHTML=selectedWindows.length?`<div class="daily-forecast"><div class="daily-kicker">Paddle plan</div><div class="daily-title">${selectedTitle}</div><div class="daily-best">${card('Best window',best)}${card('Best remaining',bestRemaining)}</div></div>`:`<div class="daily-forecast"><div class="daily-kicker">Paddle plan</div><div class="daily-title">${selectedTitle}</div><div class="daily-card"><b>No qualifying slack-water windows.</b></div></div>`;
+
+  const content=document.getElementById('content');
+  let html='';
+  if(selectedWindows.length){
+    for(const w of selectedWindows){
+      const passed=selected===today&&w.end<=now, current=selected===today&&w.start<=now&&w.end>now;
+      const tags=[];
+      if(w.advisory)tags.push(`<span class="storm-tag">${w.advisory.event.toLowerCase()}</span>`);
+      if(w.isStormy)tags.push(`<span class="storm-tag">storm risk</span>`);
+      if(w.isWindy)tags.push(`<span class="wind-tag windy">windy</span>`);else if(w.weather.found)tags.push(`<span class="wind-tag calm">calm winds</span>`);
+      if(w.alignment)tags.push(`<span class="align-tag ${w.alignment}">≈${w.alignment} current</span>`);
+      if(w.isHot)tags.push(`<span class="hot-tag">heat &mdash; hydrate</span>`);
+      tags.push(`<span class="tide-tag">${w.ev.type==='high'?'high tide':'low tide'}</span>`);if(w.partial)tags.push(`<span class="partial-tag">trimmed to daylight</span>`);
+      html+=`<div class="window ${w.isBest?'best':''} ${w.isWindy?'windy':''} ${w.advisory?'unsafe':''} ${passed?'daily-passed':''} ${current?'daily-current':''}">
+        <span class="badge ${w.swing.cls}">${w.swing.label}</span><div><div class="win-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div><div class="win-note">Slack ${w.ev.type}${w.weather.found?` &middot; wind ~${Math.round(w.weather.maxSpeed)}mph, gusts ~${Math.round(w.weather.maxGust)}mph`:''}${w.weather.found&&w.weather.maxPrecip?` &middot; ${Math.round(w.weather.maxPrecip)}% storm chance`:''}</div></div><div class="tags">${tags.join('')}</div></div>`;
     }
-    if(advisory) score -= 200;
-    if(partial) score -= 5;
-
-    const isBest = swing.cls === 'gentle' && !isWindy && !isStormy && !advisory;
-
-    const w = { ev, start, end, swing, weather, isWindy, isStormy, isHot, advisory, alignment, partial, score, isBest, iso };
-    allWindows.push(w);
-    (byDay[iso] = byDay[iso] || []).push(w);
-    if(!dayKeys.includes(iso)) dayKeys.push(iso);
   }
-
-
-
-  /* ---------------------------------------------------------
-     WEEK-AHEAD PLANNER
-     Click any day to see its complete paddle plan.
-     Today's view includes passed windows; future days show
-     the full forecast because none of their windows are passed.
-     --------------------------------------------------------- */
-  let selectedPlannerDay = todayIso;
-
-  function renderWeekPlanner(){
-    const planner = document.getElementById('weekPlanner');
-    if(!planner) return;
-
-    const availableDays = dayKeys.slice(0, 7);
-    if(!availableDays.length){ planner.innerHTML=''; return; }
-
-    if(!availableDays.includes(selectedPlannerDay)){
-      selectedPlannerDay = availableDays[0];
-    }
-
-    const dayButtons = availableDays.map(iso => {
-      const d = new Date(iso + 'T12:00:00');
-      const list = byDay[iso] || [];
-      const best = list.length ? [...list].sort((a,b)=>b.score-a.score)[0] : null;
-      const isToday = iso === todayIso;
-      return `
-        <button class="week-day ${iso===selectedPlannerDay?'active':''} ${isToday?'today':''}"
-          data-week-day="${iso}">
-          <div class="week-day-name">${d.toLocaleDateString([], {weekday:'short'})}${isToday?' · today':''}</div>
-          <div class="week-day-date">${d.toLocaleDateString([], {month:'short',day:'numeric'})}</div>
-          <div class="week-day-count">${list.length} window${list.length===1?'':'s'}</div>
-          <div class="week-day-best">${best ? best.swing.label : 'No qualifying window'}</div>
-        </button>`;
-    }).join('');
-
-    const selected = byDay[selectedPlannerDay] || [];
-    const d = new Date(selectedPlannerDay + 'T12:00:00');
-    const selectedTitle = selectedPlannerDay === todayIso
-      ? 'Today'
-      : d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'});
-
-    planner.innerHTML = `
-      <div class="week-planner">
-        <div class="week-planner-head">
-          <div>
-            <div class="week-planner-title">Plan the week</div>
-            <div class="week-planner-sub">Select a day for the full paddle forecast.</div>
-          </div>
-          <div class="week-nav">
-            <button type="button" id="weekTodayBtn">Today</button>
-          </div>
-        </div>
-
-        <div class="week-days">${dayButtons}</div>
-        <div class="week-planner-detail" id="weekPlannerDetail"></div>
-      </div>
-    `;
-
-    planner.querySelectorAll('[data-week-day]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        selectedPlannerDay = btn.dataset.weekDay;
-        renderWeekPlanner();
-        renderSelectedDayForecast(selectedPlannerDay);
-      });
-    });
-
-    planner.querySelector('#weekTodayBtn').addEventListener('click', () => {
-      selectedPlannerDay = todayIso;
-      renderWeekPlanner();
-      renderSelectedDayForecast(selectedPlannerDay);
-    });
-
-    renderSelectedDayForecast(selectedPlannerDay);
-  }
-
-  function renderSelectedDayForecast(iso){
-    const target = document.getElementById('weekPlannerDetail');
-    if(!target) return;
-
-    const list = (byDay[iso] || []).slice().sort((a,b)=>a.start-b.start);
-    const d = new Date(iso + 'T12:00:00');
-    const isToday = iso === todayIso;
-
-    if(!list.length){
-      target.innerHTML = `
-        <div class="daily-hero">
-          <div class="daily-kicker">${isToday?'Today':'Forecast'}</div>
-          <div class="daily-date">${d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'})}</div>
-          <div class="daily-best-status">No qualifying slack-water paddle windows in the forecast.</div>
-        </div>`;
-      return;
-    }
-
-    const dayNow = isToday ? new Date() : new Date(d.getFullYear(),d.getMonth(),d.getDate(),12);
-    list.forEach(w => {
-      w.dailyState = isToday
-        ? (w.end <= dayNow ? 'passed' : (w.start <= dayNow ? 'current' : 'upcoming'))
-        : 'upcoming';
-    });
-
-    const best = [...list].sort((a,b)=>b.score-a.score)[0];
-    const remaining = isToday ? list.filter(w=>w.end>dayNow) : list;
-    const bestRemaining = remaining.length ? [...remaining].sort((a,b)=>b.score-a.score)[0] : null;
-
-    const rows = list.map(w => `
-      <div class="daily-row ${w.dailyState}">
-        <div>
-          <div class="daily-row-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
-          <div class="daily-row-meta">
-            ${isToday ? dailyStatusText(w) : `${Math.round((w.end-w.start)/60000)} min`} · slack ${w.ev.type}
-          </div>
-        </div>
-        <div class="daily-row-quality">${w.swing.label}</div>
-      </div>
-    `).join('');
-
-    target.innerHTML = `
-      <div class="daily-hero">
-        <div class="daily-kicker">${isToday?'Today':'Full-day forecast'}</div>
-        <div class="daily-date">${d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'})}</div>
-        <div class="daily-best-grid">
-          ${dailyCard('🏆 Best window', best, isToday && best.dailyState==='current')}
-          ${dailyCard('🎯 Best remaining', bestRemaining, false)}
-        </div>
-      </div>
-
-      <div class="daily-section">
-        <div class="daily-section-head">
-          <strong>${isToday?'All of today':'Full day'}</strong>
-          <span>${list.length} qualifying window${list.length===1?'':'s'}</span>
-        </div>
-        ${rows}
-      </div>
-
-      <div class="daily-summary">
-        <div class="daily-stat"><span class="daily-stat-value">${list.length}</span><span class="daily-stat-label">Windows</span></div>
-        <div class="daily-stat"><span class="daily-stat-value">${list.filter(w=>w.swing.label==='Excellent').length}</span><span class="daily-stat-label">Excellent</span></div>
-        <div class="daily-stat"><span class="daily-stat-value">${Math.max(...list.map(w=>Math.round((w.end-w.start)/60000)))}</span><span class="daily-stat-label">Longest min</span></div>
-        <div class="daily-stat"><span class="daily-stat-value">${best.swing.label}</span><span class="daily-stat-label">Best rating</span></div>
-      </div>
-    `;
-  }
-
-  renderWeekPlanner();
-
-  /* ---------------------------------------------------------
-     DAILY FORECAST
-     Keep every window belonging to today's calendar day,
-     including windows that have already ended.
-     --------------------------------------------------------- */
-  const todayIso = isoDateOf(now);
-  const todaysWindows = (byDay[todayIso] || [])
-    .slice()
-    .sort((a,b) => a.start - b.start);
-
-  todaysWindows.forEach(w => {
-    w.dailyState = w.end <= now
-      ? 'passed'
-      : (w.start <= now ? 'current' : 'upcoming');
-  });
-
-  const bestToday = todaysWindows.length
-    ? [...todaysWindows].sort((a,b) => b.score - a.score)[0]
-    : null;
-
-  const remainingToday = todaysWindows.filter(w => w.end > now);
-  const bestRemaining = remainingToday.length
-    ? [...remainingToday].sort((a,b) => b.score - a.score)[0]
-    : null;
-
-  const passedToday = todaysWindows.filter(w => w.dailyState === 'passed');
-  const currentToday = todaysWindows.filter(w => w.dailyState === 'current');
-  const upcomingToday = todaysWindows.filter(w => w.dailyState === 'upcoming');
-
-  function dailyStatusText(w){
-    if(w.dailyState === 'passed'){
-      const mins = Math.max(0, Math.round((now - w.end) / 60000));
-      return mins >= 60
-        ? `Passed ${Math.floor(mins/60)}h ago`
-        : `Passed ${mins}m ago`;
-    }
-    if(w.dailyState === 'current') return 'Happening now';
-    const mins = Math.max(0, Math.round((w.start - now) / 60000));
-    return mins >= 60
-      ? `Starts in ${Math.floor(mins/60)}h`
-      : `Starts in ${mins}m`;
-  }
-
-  function dailyCard(label, w, primary){
-    if(!w) return `
-      <div class="daily-best-card">
-        <div class="daily-best-label">${label}</div>
-        <div class="daily-best-time">None remaining</div>
-        <div class="daily-best-status">All of today's paddle windows have ended.</div>
-      </div>`;
-    return `
-      <div class="daily-best-card ${primary ? 'primary' : ''}">
-        <div class="daily-best-label">${label}</div>
-        <div class="daily-best-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
-        <div class="daily-best-quality">${w.swing.label}</div>
-        <div class="daily-best-status">${dailyStatusText(w)} · ${Math.round((w.end-w.start)/60000)} min</div>
-      </div>`;
-  }
-
-  function dailyRows(title, subtitle, list){
-    if(!list.length) return '';
-    return `
-      <div class="daily-section">
-        <div class="daily-section-head">
-          <strong>${title}</strong>
-          <span>${subtitle}</span>
-        </div>
-        ${list.map(w => `
-          <div class="daily-row ${w.dailyState}">
-            <div>
-              <div class="daily-row-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
-              <div class="daily-row-meta">${dailyStatusText(w)} · slack ${w.ev.type}</div>
-            </div>
-            <div class="daily-row-quality">${w.swing.label}</div>
-          </div>
-        `).join('')}
-      </div>`;
-  }
-
-  function renderDailyTimeline(list){
-    if(!list.length) return '';
-    const dayStart = new Date(now);
-    dayStart.setHours(0,0,0,0);
-    const dayEnd = new Date(dayStart);
-    dayEnd.setDate(dayEnd.getDate()+1);
-    const span = dayEnd - dayStart;
-    const nowPct = Math.max(0, Math.min(100, ((now-dayStart)/span)*100));
-
-    const bars = list.map(w => {
-      const left = Math.max(0, ((w.start-dayStart)/span)*100);
-      const right = Math.min(100, ((w.end-dayStart)/span)*100);
-      const width = Math.max(.6, right-left);
-      return `<div class="timeline-window ${w.swing.cls} ${w.dailyState}"
-        style="left:${left}%;width:${width}%"
-        title="${fmtTime(w.start)} – ${fmtTime(w.end)} · ${w.swing.label}"></div>`;
-    }).join('');
-
-    return `
-      <div class="day-timeline">
-        <div class="timeline-title">Today's paddle day</div>
-        <div class="timeline-track">
-          ${bars}
-          <div class="timeline-now" style="left:${nowPct}%"></div>
-        </div>
-        <div class="timeline-labels">
-          <span>12 AM</span><span>6 AM</span><span>Noon</span><span>6 PM</span><span>Midnight</span>
-        </div>
-      </div>`;
-  }
-
-  const dailyForecast = document.getElementById('dailyForecast');
-  if(todaysWindows.length){
-    dailyForecast.innerHTML = `
-      <div class="daily-forecast">
-        <div class="daily-hero">
-          <div class="daily-kicker">Today</div>
-          <div class="daily-date">${fmtDay(now)}</div>
-          <div class="daily-best-grid">
-            ${dailyCard('🏆 Best window today', bestToday, true)}
-            ${dailyCard('🎯 Best remaining', bestRemaining, false)}
-          </div>
-        </div>
-
-        ${renderDailyTimeline(todaysWindows)}
-
-        ${dailyRows('Earlier today', 'Passed opportunities', passedToday)}
-        ${dailyRows('Now', 'Current paddle window', currentToday)}
-        ${dailyRows('Upcoming', 'Remaining opportunities', upcomingToday)}
-
-        <div class="daily-summary">
-          <div class="daily-stat"><span class="daily-stat-value">${todaysWindows.length}</span><span class="daily-stat-label">Windows today</span></div>
-          <div class="daily-stat"><span class="daily-stat-value">${passedToday.length}</span><span class="daily-stat-label">Passed</span></div>
-          <div class="daily-stat"><span class="daily-stat-value">${currentToday.length}</span><span class="daily-stat-label">Now</span></div>
-          <div class="daily-stat"><span class="daily-stat-value">${upcomingToday.length}</span><span class="daily-stat-label">Remaining</span></div>
-        </div>
-      </div>`;
-  } else {
-    dailyForecast.innerHTML = `
-      <div class="daily-forecast">
-        <div class="daily-hero">
-          <div class="daily-kicker">Today</div>
-          <div class="daily-date">${fmtDay(now)}</div>
-          <div class="daily-best-status">No daylight slack-water windows found today.</div>
-        </div>
-      </div>`;
-  }
-
-  // week strip: top 3 by score across all days
-  const weekStrip = document.getElementById('weekStrip');
-  const top3 = [...allWindows].filter(w => !w.advisory).sort((a,b) => b.score - a.score).slice(0,3);
-  weekStrip.innerHTML = top3.length ? `
-    <div class="week-strip">
-      <div class="ws-label">Best windows this week &middot; ${profile.label.toLowerCase()} profile</div>
-      ${top3.map(w => `
-        <div class="ws-pick">
-          <span class="ws-day">${fmtDay(w.start).split(',')[0]}</span>
-          <span class="ws-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</span>
-          <span class="ws-note">${w.swing.label}${w.weather.found ? `, ${Math.round(w.weather.maxSpeed)}mph` : ''}</span>
-        </div>`).join('')}
-    </div>` : '';
-
-  const content = document.getElementById('content');
-  let html = '';
-  for(const iso of dayKeys.slice(0, DAYS_AHEAD)){
-    const dayWindows = byDay[iso].filter(w => w.end > now);
-    if(!dayWindows.length) continue;
-    let dayHtml = '';
-    for(const w of dayWindows){
-      const tags = [];
-      if(w.advisory) tags.push(`<span class="storm-tag">${w.advisory.event.toLowerCase()}</span>`);
-      if(w.isStormy) tags.push(`<span class="storm-tag">storm risk</span>`);
-      if(w.isWindy) tags.push(`<span class="wind-tag windy">windy</span>`);
-      else if(w.weather.found) tags.push(`<span class="wind-tag calm">calm winds</span>`);
-      if(w.alignment) tags.push(`<span class="align-tag ${w.alignment}">≈${w.alignment} current</span>`);
-      if(w.isHot) tags.push(`<span class="hot-tag">heat &mdash; hydrate</span>`);
-      tags.push(`<span class="tide-tag">${w.ev.type === 'high' ? 'high tide' : 'low tide'}</span>`);
-      if(w.partial) tags.push(`<span class="partial-tag">trimmed to daylight</span>`);
-
-      dayHtml += `
-        <div class="window ${w.isBest ? 'best' : ''} ${w.isWindy ? 'windy' : ''} ${w.advisory ? 'unsafe' : ''}">
-          <span class="badge ${w.swing.cls}">${w.swing.label}</span>
-          <div>
-            <div class="win-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
-            <div class="win-note">Slack ${w.ev.type}${w.weather.found ? ` &middot; wind ~${Math.round(w.weather.maxSpeed)}mph, gusts ~${Math.round(w.weather.maxGust)}mph` : ''}${w.weather.found && w.weather.maxPrecip ? ` &middot; ${Math.round(w.weather.maxPrecip)}% storm chance` : ''}</div>
-          </div>
-          <div class="tags">${tags.join('')}</div>
-        </div>`;
-    }
-    html += `<div class="day"><div class="day-label">${fmtDay(dayWindows[0].start)}</div>${dayHtml}</div>`;
-  }
-  content.innerHTML = html || `<div class="state-msg">No daylight slack-water windows found in the next few days &mdash; check back, or try the "experienced" profile.</div>`;
+  content.innerHTML=html||`<div class="state-msg">No daylight slack-water windows found for this day.</div>`;
 }
 
 /* ---------------------------------------------------------------------
    WIRE UP
 --------------------------------------------------------------------- */
 document.getElementById('refreshBtn').addEventListener('click', () => load(true));
-setInterval(() => { if(RAW) render(); }, 60000);
-document.getElementById('profiles').addEventListener('click', (e) => {
-  const btn = e.target.closest('.profile-btn');
-  if(!btn) return;
-  currentProfile = btn.dataset.profile;
-  localStorage.setItem('kice-profile', currentProfile);
-  render();
-});
 load(false);
 </script>
 </body>
