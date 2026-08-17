@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caxambas Pass → Kice Island Paddle Windows</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --deep: #0A2733;
+    --deep-2: #0F3444;
+    --teal: #4AB8AE;
+    --sand: #E8D9B8;
+    --foam: #F4F7F5;
+    --foam-dim: #B9CBCE;
+    --amber: #E0955C;
+    --line: rgba(244,247,245,0.10);
+    --good: #6FC49B;
+    --warn: #E0955C;
+    --bad: #E0705C;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(74,184,174,0.16), transparent 55%),
+      radial-gradient(ellipse at 85% 110%, rgba(224,149,92,0.10), transparent 50%),
+      linear-gradient(180deg, var(--deep) 0%, var(--deep-2) 100%);
+    color: var(--foam);
+    font-family: 'Inter', sans-serif;
+    display:flex;
+    justify-content:center;
+    padding: 40px 20px 60px;
+  }
+  .wrap{ width:100%; max-width: 720px; }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{ width:6px;height:6px;border-radius:50%; background: var(--teal); box-shadow: 0 0 8px var(--teal); }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight: 500;
+    font-size: 30px;
+    letter-spacing: -0.01em;
+    margin: 6px 0 4px;
+  }
+  .sub{ color: var(--foam-dim); font-size: 13.5px; margin-bottom: 8px; }
+  .route-note{
+    font-size: 13px;
+    color: var(--foam-dim);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 18px 0 16px;
+    line-height: 1.5;
+  }
+  .route-note b{ color: var(--sand); font-weight:600; }
+  .route-note .fine{ display:block; margin-top:8px; font-size:11px; color: var(--foam-dim); opacity:0.75; }
+
+  /* profile toggle */
+  .profile-btn:hover{ border-color: var(--teal); color: var(--teal); }
+
+  /* advisory banner */
+  .advisory{
+    border: 1px solid rgba(224,112,92,0.5);
+    background: rgba(224,112,92,0.08);
+    border-radius: 12px;
+    padding: 13px 16px;
+    margin-bottom: 22px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .advisory .adv-title{
+    font-family:'Space Mono', monospace; font-size: 10.5px; letter-spacing:0.08em;
+    text-transform: uppercase; color: var(--bad); margin-bottom: 4px; display:flex; align-items:center; gap:7px;
+  }
+  .advisory .adv-title .warn-dot{ width:7px;height:7px;border-radius:50%; background: var(--bad); box-shadow: 0 0 8px var(--bad); }
+
+  /* week strip */
+  .week-strip{ margin-bottom: 26px; }
+  .week-strip .ws-label{
+    font-family:'Space Mono', monospace; font-size: 11px; letter-spacing:0.08em; text-transform:uppercase;
+    color: var(--foam-dim); margin-bottom: 10px;
+  }
+  .ws-pick{
+    display:flex; align-items:baseline; gap:10px;
+    border: 1px solid rgba(111,196,155,0.3);
+    background: rgba(111,196,155,0.04);
+    border-radius: 10px; padding: 9px 14px; margin-bottom: 7px;
+    font-size: 13px;
+  }
+  .ws-pick .ws-day{ font-family:'Space Mono', monospace; font-size: 10.5px; color: var(--good); min-width: 92px; }
+  .ws-pick .ws-time{ font-family:'Fraunces', serif; font-size: 15px; }
+  .ws-pick .ws-note{ color: var(--foam-dim); font-size: 11.5px; margin-left:auto; }
+
+  .day{ margin-bottom: 22px; }
+  .day-label{
+    font-family:'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--foam-dim);
+    margin-bottom: 10px;
+    padding-left: 2px;
+  }
+  .window{
+    display:flex;
+    align-items:center;
+    gap: 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.02);
+    margin-bottom: 10px;
+  }
+  .window.best{ border-color: rgba(111,196,155,0.4); background: rgba(111,196,155,0.05); }
+  .window.windy{ border-color: rgba(224,149,92,0.4); }
+  .window.unsafe{ border-color: rgba(224,112,92,0.45); background: rgba(224,112,92,0.05); }
+  .badge{
+    font-family:'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge.gentle{ background: rgba(111,196,155,0.16); color: var(--good); }
+  .badge.moderate{ background: rgba(74,184,174,0.16); color: var(--teal); }
+  .badge.brisk{ background: rgba(224,149,92,0.16); color: var(--amber); }
+  .tide-tag{
+    font-family:'Space Mono', monospace;
+    font-size: 9.5px;
+    color: var(--foam-dim);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .wind-tag{
+    font-family:'Space Mono', monospace;
+    font-size: 9.5px;
+    border-radius: 20px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .wind-tag.calm{ color: var(--foam-dim); border: 1px solid var(--line); }
+  .wind-tag.windy{ color: var(--warn); border: 1px solid rgba(224,149,92,0.4); background: rgba(224,149,92,0.08); }
+  .align-tag{
+    font-family:'Space Mono', monospace; font-size: 9.5px; border-radius: 20px; padding: 3px 8px; white-space: nowrap;
+    border: 1px solid var(--line); color: var(--foam-dim);
+  }
+  .align-tag.against{ color: var(--bad); border-color: rgba(224,112,92,0.4); background: rgba(224,112,92,0.08); }
+  .align-tag.with{ color: var(--good); border-color: rgba(111,196,155,0.35); }
+  .storm-tag{
+    font-family:'Space Mono', monospace; font-size: 9.5px; border-radius: 20px; padding: 3px 8px; white-space: nowrap;
+    color: var(--bad); border: 1px solid rgba(224,112,92,0.4); background: rgba(224,112,92,0.08);
+  }
+  .hot-tag{
+    font-family:'Space Mono', monospace; font-size: 9.5px; border-radius: 20px; padding: 3px 8px; white-space: nowrap;
+    color: var(--amber); border: 1px solid rgba(224,149,92,0.35);
+  }
+  .win-time{
+    font-family:'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    flex: 1;
+  }
+  .win-note{
+    font-size: 12px;
+    color: var(--foam-dim);
+    margin-top: 2px;
+    line-height:1.5;
+  }
+  .partial-tag{
+    font-family:'Space Mono', monospace;
+    font-size: 9.5px;
+    color: var(--foam-dim);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .tags{ display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+
+  .footer{
+    display:flex; flex-direction:column; gap:6px;
+    font-size: 11.5px; color: var(--foam-dim);
+    font-family:'Space Mono', monospace;
+    border-top: 1px solid var(--line);
+    padding-top: 16px; margin-top: 10px;
+  }
+  .footer-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .footer-sources{ font-size: 10.5px; opacity: 0.7; line-height:1.6; }
+  .footer-sources a{ color: var(--foam-dim); }
+  .refresh-btn{
+    background:none; border: 1px solid var(--line); color: var(--foam-dim);
+    font-family:'Space Mono', monospace; font-size: 11px;
+    padding: 6px 12px; border-radius: 20px; cursor:pointer;
+  }
+  .refresh-btn:hover{ border-color: var(--teal); color: var(--teal); }
+  .state-msg{ padding: 60px 10px; text-align:center; color: var(--foam-dim); font-size: 13.5px; }
+  .state-msg .spinner{
+    width:20px;height:20px;border-radius:50%;
+    border: 2px solid var(--line); border-top-color: var(--teal);
+    margin: 0 auto 14px; animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+
+
+  /* Week-ahead planner */
+  .week-planner{ margin:0 0 24px; }
+  .week-planner-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .week-planner-title{
+    font-family:'Fraunces',serif;
+    font-size:21px;
+  }
+  .week-planner-sub{
+    font-size:10px;
+    color:var(--foam-dim);
+    margin-top:3px;
+  }
+  .week-nav{
+    display:flex;
+    gap:6px;
+  }
+  .week-nav button{
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:rgba(255,255,255,.03);
+    color:var(--foam);
+    padding:7px 10px;
+    font-family:'Space Mono',monospace;
+    font-size:9px;
+    cursor:pointer;
+  }
+  .week-nav button:hover{ border-color:rgba(111,196,155,.45); }
+  .week-days{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:6px;
+  }
+  .week-day{
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:10px 8px;
+    background:rgba(255,255,255,.018);
+    cursor:pointer;
+    min-width:0;
+  }
+  .week-day.active{
+    border-color:rgba(111,196,155,.5);
+    background:rgba(111,196,155,.06);
+  }
+  .week-day.today{ box-shadow:inset 0 -2px 0 var(--teal); }
+  .week-day-name{
+    font-family:'Space Mono',monospace;
+    font-size:8px;
+    text-transform:uppercase;
+    color:var(--foam-dim);
+  }
+  .week-day-date{
+    font-family:'Fraunces',serif;
+    font-size:16px;
+    margin-top:3px;
+  }
+  .week-day-count{
+    margin-top:7px;
+    font-size:9px;
+    color:var(--foam-dim);
+  }
+  .week-day-best{
+    margin-top:4px;
+    font-size:9px;
+    color:var(--good);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .week-planner-detail{
+    margin-top:10px;
+  }
+
+  @media (max-width: 650px){
+    .week-days{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .week-day:nth-child(n+5){ display:none; }
+  }
+
+  /* =========================================================
+     DAILY FORECAST
+     ========================================================= */
+  .daily-forecast{ margin:0 0 28px; }
+  .daily-hero{
+    border:1px solid rgba(111,196,155,0.28);
+    border-radius:16px;
+    padding:20px;
+    background:rgba(111,196,155,0.045);
+  }
+  .daily-kicker{
+    font-family:'Space Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:5px;
+  }
+  .daily-date{
+    font-family:'Fraunces',serif;
+    font-size:23px;
+    margin-bottom:17px;
+  }
+  .daily-best-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .daily-best-card{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    background:rgba(255,255,255,.025);
+  }
+  .daily-best-card.primary{ border-color:rgba(111,196,155,.35); }
+  .daily-best-label{
+    font-family:'Space Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--foam-dim);
+    margin-bottom:7px;
+  }
+  .daily-best-time{ font-family:'Fraunces',serif; font-size:18px; }
+  .daily-best-quality{ font-size:11px; color:var(--good); margin-top:4px; }
+  .daily-best-status{ font-size:10.5px; color:var(--foam-dim); margin-top:7px; line-height:1.4; }
+
+  .day-timeline{
+    margin-top:12px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 16px 13px;
+    background:rgba(255,255,255,.02);
+  }
+  .timeline-title{
+    font-family:'Space Mono',monospace;
+    font-size:10px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--foam-dim);
+    margin-bottom:18px;
+  }
+  .timeline-track{
+    position:relative;
+    height:34px;
+    margin:0 2px 22px;
+    border-radius:8px;
+    background:rgba(255,255,255,.055);
+  }
+  .timeline-window{
+    position:absolute;
+    top:6px;
+    height:22px;
+    min-width:3px;
+    border-radius:5px;
+    background:var(--good);
+    opacity:.9;
+  }
+  .timeline-window.moderate{ background:var(--teal); }
+  .timeline-window.brisk{ background:var(--amber); }
+  .timeline-window.passed{ opacity:.25; }
+  .timeline-window.current{ opacity:1; box-shadow:0 0 0 2px rgba(244,247,245,.55); }
+  .timeline-now{
+    position:absolute;
+    top:-8px;
+    bottom:-8px;
+    width:2px;
+    background:var(--foam);
+    z-index:3;
+  }
+  .timeline-now::before{
+    content:'NOW';
+    position:absolute;
+    top:-15px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Space Mono',monospace;
+    font-size:8px;
+    letter-spacing:.08em;
+    color:var(--foam);
+  }
+  .timeline-labels{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Space Mono',monospace;
+    font-size:8px;
+    color:var(--foam-dim);
+    opacity:.7;
+  }
+
+  .daily-section{ margin-top:18px; }
+  .daily-section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:7px;
+  }
+  .daily-section-head strong{
+    font-family:'Space Mono',monospace;
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .daily-section-head span{ font-size:10px; color:var(--foam-dim); }
+  .daily-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:10px 12px;
+    margin-bottom:6px;
+    background:rgba(255,255,255,.018);
+  }
+  .daily-row.passed{ opacity:.48; }
+  .daily-row.current{ border-color:rgba(111,196,155,.45); background:rgba(111,196,155,.055); }
+  .daily-row-time{ font-family:'Fraunces',serif; font-size:16px; flex:1; }
+  .daily-row-meta{ font-size:9.5px; color:var(--foam-dim); margin-top:2px; }
+  .daily-row-quality{ font-family:'Space Mono',monospace; font-size:9px; text-transform:uppercase; white-space:nowrap; }
+
+  .daily-summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-top:12px;
+  }
+  .daily-stat{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:9px 6px;
+    text-align:center;
+    background:rgba(255,255,255,.018);
+  }
+  .daily-stat-value{ display:block; font-family:'Space Mono',monospace; font-size:13px; }
+  .daily-stat-label{
+    display:block;
+    margin-top:3px;
+    font-family:'Space Mono',monospace;
+    font-size:7.5px;
+    text-transform:uppercase;
+    color:var(--foam-dim);
+  }
+
+  @media (prefers-reduced-motion: reduce){ .state-msg .spinner{ animation:none; } }
+  @media (max-width: 480px){
+    .daily-best-grid{ grid-template-columns:1fr; }
+    .daily-summary{ grid-template-columns:repeat(2,1fr); }
+    .window{ flex-wrap: wrap; }
+    .ws-pick{ flex-wrap: wrap; }
+    .ws-pick .ws-note{ margin-left:0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow"><span class="dot"></span>NOAA Station 8724967 &middot; Caxambas Pass</div>
+  <h1>Kice Island Paddle Windows</h1>
+  <div class="sub">Calm-current stretches to cross, sized from predicted tide physics and checked against wind, storms, and marine advisories</div>
+  <div class="route-note">
+    Each window is centered on <b>slack water</b> and its width comes from how fast NOAA's predicted tide curve is rising or falling near that slack &mdash; steep curves mean current builds fast and get a tighter window, flat curves get a wider one. Wind speed, wind direction relative to the current, storm risk, and any active Coast Guard/NWS marine advisory are all layered on top.
+    <span class="fine">Current isn't directly measured at this pass (no NOAA current station nearby) &mdash; window sizing is a physically-motivated estimate from tide height data, not a measurement. Treat tight windows and "brisk" days with extra caution, and calibrate your own judgment against conditions you actually observe on the water.</span>
+  </div>
+
+  <div class="profiles" id="profiles">
+    <button class="profile-btn" data-profile="cautious">cautious</button>
+    <button class="profile-btn" data-profile="standard">standard</button>
+    <button class="profile-btn" data-profile="experienced">experienced</button>
+  </div>
+
+  <div id="advisoryBox"></div>
+  <div id="weekPlanner"></div>
+  <div id="dailyForecast"></div>
+  <div id="weekStrip"></div>
+  <div id="content"><div class="state-msg"><div class="spinner"></div>Reading the tide tables&hellip;</div></div>
+
+  <div class="footer">
+    <div class="footer-row">
+      <span id="asof">&mdash;</span>
+      <button class="refresh-btn" id="refreshBtn">refresh</button>
+    </div>
+    <div class="footer-sources" id="sourceStatus"></div>
+  </div>
+</div>
+
+<script>
+/* ---------------------------------------------------------------------
+   CONFIG
+--------------------------------------------------------------------- */
+const STATION = '8724967';                 // NOAA CO-OPS tide station, Caxambas Pass
+const LAT = 25.9184, LNG = -81.7284;        // Caxambas Pass entrance
+const TZ = 'America/New_York';
+const MARINE_ZONE = 'GMZ656';               // NWS zone: Chokoloskee to Bonita Beach FL, out 20nm
+
+// Compass bearing (degrees) that the EBB current flows TOWARD (out into the
+// Gulf). This is an ESTIMATE for chop-alignment purposes only — no current
+// station exists at this pass, so nothing here is measured. Verify against
+// a chart (NOAA chart 11430) or on-the-water observation before trusting
+// the "against current" tag; it's a hint, not a guarantee.
+const CHANNEL_EBB_BEARING_DEG = 250;
+
+const DAYS_AHEAD = 7;
+const CACHE_TTL_MS = 10 * 60 * 1000;        // 10 min session cache
+const CACHE_KEY = 'kice-v4-cache';
+
+// Comfort profiles: how much wind / current-build rate / storm risk we'll tolerate
+const PROFILES = {
+  cautious:    { label:'Cautious',    windWarn:12, gustWarn:16, rateCap:0.10, precipWarn:30 },
+  standard:    { label:'Standard',    windWarn:15, gustWarn:20, rateCap:0.15, precipWarn:40 },
+  experienced: { label:'Experienced', windWarn:20, gustWarn:26, rateCap:0.22, precipWarn:55 }
+};
+let currentProfile = localStorage.getItem('kice-profile') || 'standard';
+
+/* ---------------------------------------------------------------------
+   TIME / FORMAT HELPERS
+--------------------------------------------------------------------- */
+function dateStr(offsetDays){
+  const d = new Date(); d.setDate(d.getDate() + offsetDays);
+  return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+}
+function isoDateStr(offsetDays){
+  const d = new Date(); d.setDate(d.getDate() + offsetDays);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtTime(d){ return d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit', timeZone: TZ }); }
+function fmtDay(d){ return d.toLocaleDateString('en-US', { weekday:'long', month:'short', day:'numeric', timeZone: TZ }); }
+function hourKey(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}T${String(d.getHours()).padStart(2,'0')}:00`;
+}
+function angleDiff(a,b){ let d = Math.abs(a-b) % 360; return d > 180 ? 360-d : d; }
+
+/* ---------------------------------------------------------------------
+   NETWORKING — NOAA lacks reliable CORS, so try direct then fall back
+   through public proxies. Other sources (Open-Meteo, sunrise-sunset.org,
+   api.weather.gov) support CORS directly and are called straight.
+--------------------------------------------------------------------- */
+async function fetchWithFallback(targetUrl, timeoutMs = 12000){
+  const attempts = [
+    targetUrl,
+    'https://corsproxy.io/?url=' + encodeURIComponent(targetUrl),
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl)
+  ];
+  let lastErr;
+  for(const url of attempts){
+    try{
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+      const res = await fetch(url, { signal: ctrl.signal });
+      clearTimeout(timer);
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      if(json && json.error) throw new Error(json.error.message || 'API error');
+      return json;
+    }catch(e){ lastErr = e; }
+  }
+  throw lastErr;
+}
+async function fetchDirect(url, timeoutMs = 10000){
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try{
+    const res = await fetch(url, { signal: ctrl.signal, headers: { 'Accept': 'application/geo+json, application/json' } });
+    clearTimeout(timer);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  }finally{ clearTimeout(timer); }
+}
+
+/* ---------------------------------------------------------------------
+   DATA FETCHERS
+--------------------------------------------------------------------- */
+// 6-minute interval tide predictions. We derive BOTH slack (hi/lo) events
+// AND the rate-of-change curve from this single series, instead of making
+// a second call for hilo events.
+async function fetchTideCurve(){
+  const target = 'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' + new URLSearchParams({
+    product:'predictions', application:'kice_paddle_v4', begin_date: dateStr(0),
+    end_date: dateStr(DAYS_AHEAD), datum:'MLLW', station: STATION, time_zone:'lst_ldt',
+    units:'english', interval:'6', format:'json'
+  }).toString();
+  const json = await fetchWithFallback(target);
+  return json.predictions.map(p => ({ t: new Date(p.t.replace(' ', 'T')), v: parseFloat(p.v) }));
+}
+
+async function fetchSun(dateIso){
+  const url = `https://api.sunrise-sunset.org/json?lat=${LAT}&lng=${LNG}&date=${dateIso}&formatted=0&tzid=${TZ}`;
+  const json = await fetchDirect(url);
+  return { sunrise: new Date(json.results.sunrise), sunset: new Date(json.results.sunset) };
+}
+
+// Open-Meteo: free, no key, CORS-friendly. Wind speed/gust/direction,
+// precipitation probability, and temperature all in one call.
+async function fetchWeather(){
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LNG}` +
+    `&hourly=windspeed_10m,windgusts_10m,winddirection_10m,precipitation_probability,temperature_2m` +
+    `&wind_speed_unit=mph&temperature_unit=fahrenheit&timezone=${encodeURIComponent(TZ)}` +
+    `&start_date=${isoDateStr(0)}&end_date=${isoDateStr(DAYS_AHEAD)}`;
+  const json = await fetchDirect(url);
+  const byHour = {};
+  json.hourly.time.forEach((t, i) => {
+    byHour[t] = {
+      speed: json.hourly.windspeed_10m[i],
+      gust: json.hourly.windgusts_10m[i],
+      dir: json.hourly.winddirection_10m[i],
+      precip: json.hourly.precipitation_probability[i],
+      temp: json.hourly.temperature_2m[i]
+    };
+  });
+  return byHour;
+}
+
+// NWS active marine alerts (Small Craft Advisory, Special Marine Warning, etc.)
+async function fetchAdvisories(){
+  const url = `https://api.weather.gov/alerts/active/zone/${MARINE_ZONE}`;
+  const json = await fetchDirect(url);
+  return (json.features || []).map(f => ({
+    event: f.properties.event,
+    headline: f.properties.headline,
+    onset: f.properties.onset ? new Date(f.properties.onset) : null,
+    ends: f.properties.ends ? new Date(f.properties.ends) : (f.properties.expires ? new Date(f.properties.expires) : null)
+  }));
+}
+
+function summarizeWindow(weatherByHour, start, end){
+  let maxSpeed = 0, maxGust = 0, maxPrecip = 0, maxTemp = -999, dirSum = {x:0,y:0}, found = false;
+  const cursor = new Date(start); cursor.setMinutes(0,0,0);
+  while(cursor <= end){
+    const hit = weatherByHour[hourKey(cursor)];
+    if(hit){
+      found = true;
+      maxSpeed = Math.max(maxSpeed, hit.speed || 0);
+      maxGust = Math.max(maxGust, hit.gust || 0);
+      maxPrecip = Math.max(maxPrecip, hit.precip || 0);
+      maxTemp = Math.max(maxTemp, hit.temp ?? -999);
+      if(typeof hit.dir === 'number'){
+        const rad = hit.dir * Math.PI/180;
+        dirSum.x += Math.cos(rad); dirSum.y += Math.sin(rad);
+      }
+    }
+    cursor.setHours(cursor.getHours() + 1);
+  }
+  const avgDir = found ? ((Math.atan2(dirSum.y, dirSum.x) * 180/Math.PI) + 360) % 360 : null;
+  return { found, maxSpeed, maxGust, maxPrecip, maxTemp, avgDir };
+}
+
+/* ---------------------------------------------------------------------
+   CURRENT-WINDOW MODEL
+   Derive slack points + window width from the tide curve's own rate of
+   change (ft/hr), rather than a fixed 40/60/90-min bucket by tide range.
+--------------------------------------------------------------------- */
+function buildRates(points){
+  const rates = new Array(points.length).fill(0);
+  for(let i=0;i<points.length;i++){
+    if(i===0){
+      rates[i] = (points[1].v - points[0].v) / ((points[1].t - points[0].t)/3600000);
+    }else if(i===points.length-1){
+      rates[i] = (points[i].v - points[i-1].v) / ((points[i].t - points[i-1].t)/3600000);
+    }else{
+      rates[i] = (points[i+1].v - points[i-1].v) / ((points[i+1].t - points[i-1].t)/3600000);
+    }
+  }
+  return rates;
+}
+
+function findSlackEvents(points, rates){
+  const events = [];
+  for(let i=1;i<rates.length-1;i++){
+    const a = rates[i], b = rates[i+1];
+    if((a>=0 && b<0) || (a<0 && b>=0)){
+      const frac = a === b ? 0.5 : a/(a-b);
+      const t = new Date(points[i].t.getTime() + frac*(points[i+1].t.getTime()-points[i].t.getTime()));
+      const v = points[i].v + frac*(points[i+1].v-points[i].v);
+      events.push({ idx: i, t, v, type: a >= 0 ? 'high' : 'low' });
+    }
+  }
+  return events;
+}
+
+function windowForSlack(points, rates, slackIdx, rateCap){
+  const MAX_HALF_WIDTH_MIN = 150, MIN_HALF_WIDTH_MIN = 15;
+  let left = slackIdx, right = slackIdx;
+  while(left > 0 && Math.abs(rates[left]) < rateCap &&
+        (points[slackIdx].t - points[left].t)/60000 < MAX_HALF_WIDTH_MIN) left--;
+  while(right < points.length-1 && Math.abs(rates[right]) < rateCap &&
+        (points[right].t - points[slackIdx].t)/60000 < MAX_HALF_WIDTH_MIN) right++;
+  let start = points[left].t, end = points[right].t;
+  const halfMin = Math.max(MIN_HALF_WIDTH_MIN, (points[slackIdx].t - start)/60000);
+  if((points[slackIdx].t - start)/60000 < MIN_HALF_WIDTH_MIN){
+    start = new Date(points[slackIdx].t.getTime() - MIN_HALF_WIDTH_MIN*60000);
+  }
+  if((end - points[slackIdx].t)/60000 < MIN_HALF_WIDTH_MIN){
+    end = new Date(points[slackIdx].t.getTime() + MIN_HALF_WIDTH_MIN*60000);
+  }
+  return { start, end };
+}
+
+function classifyWidth(totalMin){
+  if(totalMin >= 160) return { label:'gentle', cls:'gentle' };
+  if(totalMin >= 90) return { label:'moderate', cls:'moderate' };
+  return { label:'builds quickly', cls:'brisk' };
+}
+
+/* ---------------------------------------------------------------------
+   STATE
+--------------------------------------------------------------------- */
+let RAW = null; // { points, rates, weatherByHour, sunByDate, advisories, fetchedAt }
+
+function readCache(){
+  try{
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if(!raw) return null;
+    const parsed = JSON.parse(raw);
+    if(Date.now() - parsed.fetchedAt > CACHE_TTL_MS) return null;
+    parsed.points = parsed.points.map(p => ({ t: new Date(p.t), v: p.v }));
+    parsed.advisories = (parsed.advisories||[]).map(a => ({ ...a, onset: a.onset ? new Date(a.onset) : null, ends: a.ends ? new Date(a.ends) : null }));
+    const sunByDate = {};
+    for(const iso in parsed.sunByDate){
+      sunByDate[iso] = { sunrise: new Date(parsed.sunByDate[iso].sunrise), sunset: new Date(parsed.sunByDate[iso].sunset) };
+    }
+    parsed.sunByDate = sunByDate;
+    return parsed;
+  }catch(e){ return null; }
+}
+function writeCache(data){
+  try{ sessionStorage.setItem(CACHE_KEY, JSON.stringify(data)); }catch(e){ /* storage full/blocked — ignore */ }
+}
+
+/* ---------------------------------------------------------------------
+   LOAD
+--------------------------------------------------------------------- */
+async function load(force){
+  const content = document.getElementById('content');
+  const asof = document.getElementById('asof');
+  const sourceStatus = document.getElementById('sourceStatus');
+  content.innerHTML = `<div class="state-msg"><div class="spinner"></div>Reading the tide tables&hellip;</div>`;
+
+  if(!force){
+    const cached = readCache();
+    if(cached){ RAW = cached; render(); return; }
+  }
+
+  const status = { tide:'pending', weather:'pending', sun:'pending', advisories:'pending' };
+  const paintStatus = () => {
+    sourceStatus.textContent = `tide/current: ${status.tide} · wind/storm: ${status.weather} · daylight: ${status.sun} · advisories: ${status.advisories}`;
+  };
+  paintStatus();
+
+  let points = null;
+  try{
+    points = await fetchTideCurve();
+    status.tide = 'ok';
+  }catch(e){
+    status.tide = 'failed';
+    paintStatus();
+    content.innerHTML = `<div class="state-msg">Couldn't reach NOAA tide data right now.<br>Try refresh in a moment.</div>`;
+    asof.textContent = 'connection issue';
+    console.error('tide fetch failed', e);
+    return;
+  }
+  paintStatus();
+
+  let weatherByHour = {};
+  fetchWeather().then(w => { weatherByHour = w; status.weather = 'ok'; finishIfReady(); })
+                .catch(e => { status.weather = 'unavailable'; console.error('weather fetch failed', e); finishIfReady(); });
+
+  let advisories = [];
+  fetchAdvisories().then(a => { advisories = a; status.advisories = 'ok'; finishIfReady(); })
+                    .catch(e => { status.advisories = 'unavailable'; console.error('advisory fetch failed', e); finishIfReady(); });
+
+  const rates = buildRates(points);
+  const slackEvents = findSlackEvents(points, rates).filter(e => e.t > new Date());
+  const dayIsoSet = [...new Set(slackEvents.map(e => isoDateOf(e.t)))].slice(0, DAYS_AHEAD);
+  const sunByDate = {};
+  const sunResults = await Promise.allSettled(dayIsoSet.map(iso => fetchSun(iso).then(s => ({ iso, s }))));
+  sunResults.forEach(r => { if(r.status === 'fulfilled') sunByDate[r.value.iso] = r.value.s; });
+  status.sun = sunResults.some(r => r.status === 'fulfilled') ? 'ok' : 'unavailable';
+  paintStatus();
+
+  let readyFired = false;
+  function finishIfReady(){
+    if(status.weather === 'pending' || status.advisories === 'pending') { paintStatus(); return; }
+    if(readyFired) return;
+    readyFired = true;
+    RAW = { points, rates, weatherByHour, sunByDate, advisories, fetchedAt: Date.now() };
+    writeCache(RAW);
+    paintStatus();
+    asof.textContent = `as of ${fmtTime(new Date())} ET`;
+    render();
+  }
+  // in case both weather+advisories already settled synchronously from cache-like speed
+  finishIfReady();
+}
+
+function isoDateOf(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+/* ---------------------------------------------------------------------
+   RENDER (pure function of RAW + currentProfile — no network calls,
+   so switching profiles is instant)
+--------------------------------------------------------------------- */
+function activeAdvisoryAt(advisories, start, end){
+  return advisories.find(a => {
+    const onset = a.onset || new Date(0);
+    const ends = a.ends || new Date(8640000000000000);
+    return onset <= end && ends >= start;
+  });
+}
+
+function render(){
+  if(!RAW) return;
+  const profile = PROFILES[currentProfile];
+
+  const { points, rates, weatherByHour, sunByDate, advisories } = RAW;
+
+  // advisory banner (only show ones active now or starting within window)
+  const advisoryBox = document.getElementById('advisoryBox');
+  const liveAdvisories = advisories.filter(a => !a.ends || a.ends > new Date());
+  advisoryBox.innerHTML = liveAdvisories.map(a => `
+    <div class="advisory">
+      <div class="adv-title"><span class="warn-dot"></span>${a.event}</div>
+      ${a.headline || 'Active marine advisory for this zone — check the full NWS forecast before heading out.'}
+    </div>`).join('');
+
+  const now = new Date();
+  const slackEvents = findSlackEvents(points, rates);
+  const dayKeys = [];
+  const byDay = {};
+  const allWindows = [];
+
+  for(const ev of slackEvents){
+    const iso = isoDateOf(ev.t);
+    const sun = sunByDate[iso];
+    const win = windowForSlack(points, rates, ev.idx, profile.rateCap);
+    let start = win.start, end = win.end, partial = false;
+    if(sun){
+      if(end <= sun.sunrise || start >= sun.sunset) continue; // fully in the dark
+      start = start < sun.sunrise ? sun.sunrise : start;
+      end = end > sun.sunset ? sun.sunset : end;
+      if((end-start) < 60*60000) partial = true;
+    }
+
+    const totalMin = (win.end - win.start)/60000;
+    const swing = classifyWidth(totalMin);
+    const weather = summarizeWindow(weatherByHour, start, end);
+    const isWindy = weather.found && (weather.maxSpeed >= profile.windWarn || weather.maxGust >= profile.gustWarn);
+    const isStormy = weather.found && weather.maxPrecip >= profile.precipWarn;
+    const isHot = weather.found && weather.maxTemp >= 92;
+    const advisory = activeAdvisoryAt(advisories, start, end);
+
+    // flow direction: at a HIGH slack, current turns from flood to ebb; at LOW, ebb to flood
+    const flowTo = ev.type === 'high' ? CHANNEL_EBB_BEARING_DEG : (CHANNEL_EBB_BEARING_DEG + 180) % 360;
+    let alignment = null;
+    if(weather.found && weather.avgDir !== null){
+      const windBlowingTo = (weather.avgDir + 180) % 360;
+      const diff = angleDiff(windBlowingTo, flowTo);
+      alignment = diff < 55 ? 'with' : (diff > 125 ? 'against' : 'cross');
+    }
+
+    // score: higher is better. Advisory active essentially disqualifies.
+    let score = Math.min(totalMin/180, 1) * 40;
+    if(weather.found){
+      score -= Math.max(0, weather.maxSpeed - profile.windWarn) * 2;
+      score -= Math.max(0, weather.maxGust - profile.gustWarn) * 1.5;
+      score -= isStormy ? 25 : 0;
+      score += alignment === 'with' ? 5 : (alignment === 'against' ? -12 : 0);
+    }
+    if(advisory) score -= 200;
+    if(partial) score -= 5;
+
+    const isBest = swing.cls === 'gentle' && !isWindy && !isStormy && !advisory;
+
+    const w = { ev, start, end, swing, weather, isWindy, isStormy, isHot, advisory, alignment, partial, score, isBest, iso };
+    allWindows.push(w);
+    (byDay[iso] = byDay[iso] || []).push(w);
+    if(!dayKeys.includes(iso)) dayKeys.push(iso);
+  }
+
+
+
+  /* ---------------------------------------------------------
+     WEEK-AHEAD PLANNER
+     Click any day to see its complete paddle plan.
+     Today's view includes passed windows; future days show
+     the full forecast because none of their windows are passed.
+     --------------------------------------------------------- */
+  let selectedPlannerDay = todayIso;
+
+  function renderWeekPlanner(){
+    const planner = document.getElementById('weekPlanner');
+    if(!planner) return;
+
+    const availableDays = dayKeys.slice(0, 7);
+    if(!availableDays.length){ planner.innerHTML=''; return; }
+
+    if(!availableDays.includes(selectedPlannerDay)){
+      selectedPlannerDay = availableDays[0];
+    }
+
+    const dayButtons = availableDays.map(iso => {
+      const d = new Date(iso + 'T12:00:00');
+      const list = byDay[iso] || [];
+      const best = list.length ? [...list].sort((a,b)=>b.score-a.score)[0] : null;
+      const isToday = iso === todayIso;
+      return `
+        <button class="week-day ${iso===selectedPlannerDay?'active':''} ${isToday?'today':''}"
+          data-week-day="${iso}">
+          <div class="week-day-name">${d.toLocaleDateString([], {weekday:'short'})}${isToday?' · today':''}</div>
+          <div class="week-day-date">${d.toLocaleDateString([], {month:'short',day:'numeric'})}</div>
+          <div class="week-day-count">${list.length} window${list.length===1?'':'s'}</div>
+          <div class="week-day-best">${best ? best.swing.label : 'No qualifying window'}</div>
+        </button>`;
+    }).join('');
+
+    const selected = byDay[selectedPlannerDay] || [];
+    const d = new Date(selectedPlannerDay + 'T12:00:00');
+    const selectedTitle = selectedPlannerDay === todayIso
+      ? 'Today'
+      : d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'});
+
+    planner.innerHTML = `
+      <div class="week-planner">
+        <div class="week-planner-head">
+          <div>
+            <div class="week-planner-title">Plan the week</div>
+            <div class="week-planner-sub">Select a day for the full paddle forecast.</div>
+          </div>
+          <div class="week-nav">
+            <button type="button" id="weekTodayBtn">Today</button>
+          </div>
+        </div>
+
+        <div class="week-days">${dayButtons}</div>
+        <div class="week-planner-detail" id="weekPlannerDetail"></div>
+      </div>
+    `;
+
+    planner.querySelectorAll('[data-week-day]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedPlannerDay = btn.dataset.weekDay;
+        renderWeekPlanner();
+        renderSelectedDayForecast(selectedPlannerDay);
+      });
+    });
+
+    planner.querySelector('#weekTodayBtn').addEventListener('click', () => {
+      selectedPlannerDay = todayIso;
+      renderWeekPlanner();
+      renderSelectedDayForecast(selectedPlannerDay);
+    });
+
+    renderSelectedDayForecast(selectedPlannerDay);
+  }
+
+  function renderSelectedDayForecast(iso){
+    const target = document.getElementById('weekPlannerDetail');
+    if(!target) return;
+
+    const list = (byDay[iso] || []).slice().sort((a,b)=>a.start-b.start);
+    const d = new Date(iso + 'T12:00:00');
+    const isToday = iso === todayIso;
+
+    if(!list.length){
+      target.innerHTML = `
+        <div class="daily-hero">
+          <div class="daily-kicker">${isToday?'Today':'Forecast'}</div>
+          <div class="daily-date">${d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'})}</div>
+          <div class="daily-best-status">No qualifying slack-water paddle windows in the forecast.</div>
+        </div>`;
+      return;
+    }
+
+    const dayNow = isToday ? new Date() : new Date(d.getFullYear(),d.getMonth(),d.getDate(),12);
+    list.forEach(w => {
+      w.dailyState = isToday
+        ? (w.end <= dayNow ? 'passed' : (w.start <= dayNow ? 'current' : 'upcoming'))
+        : 'upcoming';
+    });
+
+    const best = [...list].sort((a,b)=>b.score-a.score)[0];
+    const remaining = isToday ? list.filter(w=>w.end>dayNow) : list;
+    const bestRemaining = remaining.length ? [...remaining].sort((a,b)=>b.score-a.score)[0] : null;
+
+    const rows = list.map(w => `
+      <div class="daily-row ${w.dailyState}">
+        <div>
+          <div class="daily-row-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
+          <div class="daily-row-meta">
+            ${isToday ? dailyStatusText(w) : `${Math.round((w.end-w.start)/60000)} min`} · slack ${w.ev.type}
+          </div>
+        </div>
+        <div class="daily-row-quality">${w.swing.label}</div>
+      </div>
+    `).join('');
+
+    target.innerHTML = `
+      <div class="daily-hero">
+        <div class="daily-kicker">${isToday?'Today':'Full-day forecast'}</div>
+        <div class="daily-date">${d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'})}</div>
+        <div class="daily-best-grid">
+          ${dailyCard('🏆 Best window', best, isToday && best.dailyState==='current')}
+          ${dailyCard('🎯 Best remaining', bestRemaining, false)}
+        </div>
+      </div>
+
+      <div class="daily-section">
+        <div class="daily-section-head">
+          <strong>${isToday?'All of today':'Full day'}</strong>
+          <span>${list.length} qualifying window${list.length===1?'':'s'}</span>
+        </div>
+        ${rows}
+      </div>
+
+      <div class="daily-summary">
+        <div class="daily-stat"><span class="daily-stat-value">${list.length}</span><span class="daily-stat-label">Windows</span></div>
+        <div class="daily-stat"><span class="daily-stat-value">${list.filter(w=>w.swing.label==='Excellent').length}</span><span class="daily-stat-label">Excellent</span></div>
+        <div class="daily-stat"><span class="daily-stat-value">${Math.max(...list.map(w=>Math.round((w.end-w.start)/60000)))}</span><span class="daily-stat-label">Longest min</span></div>
+        <div class="daily-stat"><span class="daily-stat-value">${best.swing.label}</span><span class="daily-stat-label">Best rating</span></div>
+      </div>
+    `;
+  }
+
+  renderWeekPlanner();
+
+  /* ---------------------------------------------------------
+     DAILY FORECAST
+     Keep every window belonging to today's calendar day,
+     including windows that have already ended.
+     --------------------------------------------------------- */
+  const todayIso = isoDateOf(now);
+  const todaysWindows = (byDay[todayIso] || [])
+    .slice()
+    .sort((a,b) => a.start - b.start);
+
+  todaysWindows.forEach(w => {
+    w.dailyState = w.end <= now
+      ? 'passed'
+      : (w.start <= now ? 'current' : 'upcoming');
+  });
+
+  const bestToday = todaysWindows.length
+    ? [...todaysWindows].sort((a,b) => b.score - a.score)[0]
+    : null;
+
+  const remainingToday = todaysWindows.filter(w => w.end > now);
+  const bestRemaining = remainingToday.length
+    ? [...remainingToday].sort((a,b) => b.score - a.score)[0]
+    : null;
+
+  const passedToday = todaysWindows.filter(w => w.dailyState === 'passed');
+  const currentToday = todaysWindows.filter(w => w.dailyState === 'current');
+  const upcomingToday = todaysWindows.filter(w => w.dailyState === 'upcoming');
+
+  function dailyStatusText(w){
+    if(w.dailyState === 'passed'){
+      const mins = Math.max(0, Math.round((now - w.end) / 60000));
+      return mins >= 60
+        ? `Passed ${Math.floor(mins/60)}h ago`
+        : `Passed ${mins}m ago`;
+    }
+    if(w.dailyState === 'current') return 'Happening now';
+    const mins = Math.max(0, Math.round((w.start - now) / 60000));
+    return mins >= 60
+      ? `Starts in ${Math.floor(mins/60)}h`
+      : `Starts in ${mins}m`;
+  }
+
+  function dailyCard(label, w, primary){
+    if(!w) return `
+      <div class="daily-best-card">
+        <div class="daily-best-label">${label}</div>
+        <div class="daily-best-time">None remaining</div>
+        <div class="daily-best-status">All of today's paddle windows have ended.</div>
+      </div>`;
+    return `
+      <div class="daily-best-card ${primary ? 'primary' : ''}">
+        <div class="daily-best-label">${label}</div>
+        <div class="daily-best-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
+        <div class="daily-best-quality">${w.swing.label}</div>
+        <div class="daily-best-status">${dailyStatusText(w)} · ${Math.round((w.end-w.start)/60000)} min</div>
+      </div>`;
+  }
+
+  function dailyRows(title, subtitle, list){
+    if(!list.length) return '';
+    return `
+      <div class="daily-section">
+        <div class="daily-section-head">
+          <strong>${title}</strong>
+          <span>${subtitle}</span>
+        </div>
+        ${list.map(w => `
+          <div class="daily-row ${w.dailyState}">
+            <div>
+              <div class="daily-row-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
+              <div class="daily-row-meta">${dailyStatusText(w)} · slack ${w.ev.type}</div>
+            </div>
+            <div class="daily-row-quality">${w.swing.label}</div>
+          </div>
+        `).join('')}
+      </div>`;
+  }
+
+  function renderDailyTimeline(list){
+    if(!list.length) return '';
+    const dayStart = new Date(now);
+    dayStart.setHours(0,0,0,0);
+    const dayEnd = new Date(dayStart);
+    dayEnd.setDate(dayEnd.getDate()+1);
+    const span = dayEnd - dayStart;
+    const nowPct = Math.max(0, Math.min(100, ((now-dayStart)/span)*100));
+
+    const bars = list.map(w => {
+      const left = Math.max(0, ((w.start-dayStart)/span)*100);
+      const right = Math.min(100, ((w.end-dayStart)/span)*100);
+      const width = Math.max(.6, right-left);
+      return `<div class="timeline-window ${w.swing.cls} ${w.dailyState}"
+        style="left:${left}%;width:${width}%"
+        title="${fmtTime(w.start)} – ${fmtTime(w.end)} · ${w.swing.label}"></div>`;
+    }).join('');
+
+    return `
+      <div class="day-timeline">
+        <div class="timeline-title">Today's paddle day</div>
+        <div class="timeline-track">
+          ${bars}
+          <div class="timeline-now" style="left:${nowPct}%"></div>
+        </div>
+        <div class="timeline-labels">
+          <span>12 AM</span><span>6 AM</span><span>Noon</span><span>6 PM</span><span>Midnight</span>
+        </div>
+      </div>`;
+  }
+
+  const dailyForecast = document.getElementById('dailyForecast');
+  if(todaysWindows.length){
+    dailyForecast.innerHTML = `
+      <div class="daily-forecast">
+        <div class="daily-hero">
+          <div class="daily-kicker">Today</div>
+          <div class="daily-date">${fmtDay(now)}</div>
+          <div class="daily-best-grid">
+            ${dailyCard('🏆 Best window today', bestToday, true)}
+            ${dailyCard('🎯 Best remaining', bestRemaining, false)}
+          </div>
+        </div>
+
+        ${renderDailyTimeline(todaysWindows)}
+
+        ${dailyRows('Earlier today', 'Passed opportunities', passedToday)}
+        ${dailyRows('Now', 'Current paddle window', currentToday)}
+        ${dailyRows('Upcoming', 'Remaining opportunities', upcomingToday)}
+
+        <div class="daily-summary">
+          <div class="daily-stat"><span class="daily-stat-value">${todaysWindows.length}</span><span class="daily-stat-label">Windows today</span></div>
+          <div class="daily-stat"><span class="daily-stat-value">${passedToday.length}</span><span class="daily-stat-label">Passed</span></div>
+          <div class="daily-stat"><span class="daily-stat-value">${currentToday.length}</span><span class="daily-stat-label">Now</span></div>
+          <div class="daily-stat"><span class="daily-stat-value">${upcomingToday.length}</span><span class="daily-stat-label">Remaining</span></div>
+        </div>
+      </div>`;
+  } else {
+    dailyForecast.innerHTML = `
+      <div class="daily-forecast">
+        <div class="daily-hero">
+          <div class="daily-kicker">Today</div>
+          <div class="daily-date">${fmtDay(now)}</div>
+          <div class="daily-best-status">No daylight slack-water windows found today.</div>
+        </div>
+      </div>`;
+  }
+
+  // week strip: top 3 by score across all days
+  const weekStrip = document.getElementById('weekStrip');
+  const top3 = [...allWindows].filter(w => !w.advisory).sort((a,b) => b.score - a.score).slice(0,3);
+  weekStrip.innerHTML = top3.length ? `
+    <div class="week-strip">
+      <div class="ws-label">Best windows this week &middot; ${profile.label.toLowerCase()} profile</div>
+      ${top3.map(w => `
+        <div class="ws-pick">
+          <span class="ws-day">${fmtDay(w.start).split(',')[0]}</span>
+          <span class="ws-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</span>
+          <span class="ws-note">${w.swing.label}${w.weather.found ? `, ${Math.round(w.weather.maxSpeed)}mph` : ''}</span>
+        </div>`).join('')}
+    </div>` : '';
+
+  const content = document.getElementById('content');
+  let html = '';
+  for(const iso of dayKeys.slice(0, DAYS_AHEAD)){
+    const dayWindows = byDay[iso].filter(w => w.end > now);
+    if(!dayWindows.length) continue;
+    let dayHtml = '';
+    for(const w of dayWindows){
+      const tags = [];
+      if(w.advisory) tags.push(`<span class="storm-tag">${w.advisory.event.toLowerCase()}</span>`);
+      if(w.isStormy) tags.push(`<span class="storm-tag">storm risk</span>`);
+      if(w.isWindy) tags.push(`<span class="wind-tag windy">windy</span>`);
+      else if(w.weather.found) tags.push(`<span class="wind-tag calm">calm winds</span>`);
+      if(w.alignment) tags.push(`<span class="align-tag ${w.alignment}">≈${w.alignment} current</span>`);
+      if(w.isHot) tags.push(`<span class="hot-tag">heat &mdash; hydrate</span>`);
+      tags.push(`<span class="tide-tag">${w.ev.type === 'high' ? 'high tide' : 'low tide'}</span>`);
+      if(w.partial) tags.push(`<span class="partial-tag">trimmed to daylight</span>`);
+
+      dayHtml += `
+        <div class="window ${w.isBest ? 'best' : ''} ${w.isWindy ? 'windy' : ''} ${w.advisory ? 'unsafe' : ''}">
+          <span class="badge ${w.swing.cls}">${w.swing.label}</span>
+          <div>
+            <div class="win-time">${fmtTime(w.start)} – ${fmtTime(w.end)}</div>
+            <div class="win-note">Slack ${w.ev.type}${w.weather.found ? ` &middot; wind ~${Math.round(w.weather.maxSpeed)}mph, gusts ~${Math.round(w.weather.maxGust)}mph` : ''}${w.weather.found && w.weather.maxPrecip ? ` &middot; ${Math.round(w.weather.maxPrecip)}% storm chance` : ''}</div>
+          </div>
+          <div class="tags">${tags.join('')}</div>
+        </div>`;
+    }
+    html += `<div class="day"><div class="day-label">${fmtDay(dayWindows[0].start)}</div>${dayHtml}</div>`;
+  }
+  content.innerHTML = html || `<div class="state-msg">No daylight slack-water windows found in the next few days &mdash; check back, or try the "experienced" profile.</div>`;
+}
+
+/* ---------------------------------------------------------------------
+   WIRE UP
+--------------------------------------------------------------------- */
+document.getElementById('refreshBtn').addEventListener('click', () => load(true));
+setInterval(() => { if(RAW) render(); }, 60000);
+document.getElementById('profiles').addEventListener('click', (e) => {
+  const btn = e.target.closest('.profile-btn');
+  if(!btn) return;
+  currentProfile = btn.dataset.profile;
+  localStorage.setItem('kice-profile', currentProfile);
+  render();
+});
+load(false);
+</script>
+</body>
+</html>
