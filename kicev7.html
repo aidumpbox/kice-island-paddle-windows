@@ -239,7 +239,15 @@ function findSlackEvents(points, rates){
       const frac = a === b ? 0.5 : a/(a-b);
       const t = new Date(points[i].t.getTime() + frac*(points[i+1].t.getTime()-points[i].t.getTime()));
       const v = points[i].v + frac*(points[i+1].v-points[i].v);
-      events.push({ idx: i, t, v, type: a >= 0 ? 'high' : 'low' });
+      const type = a >= 0 ? 'high' : 'low';
+
+      // NOAA/model interpolation can occasionally produce the same
+      // slack-water crossing more than once at a boundary.  Treat
+      // crossings landing in the same minute as one event.
+      const duplicate = events.some(e =>
+        e.type === type && Math.abs(e.t.getTime() - t.getTime()) < 60000
+      );
+      if(!duplicate) events.push({ idx: i, t, v, type });
     }
   }
   return events;
