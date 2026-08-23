@@ -435,9 +435,9 @@ const CACHE_KEY = 'kice-v5-cache';
 
 // Comfort profiles: how much wind / current-build rate / storm risk we'll tolerate.
 const PROFILES = {
-  cautious:    { label:'Cautious',    windWarn:12, gustWarn:16, rateCap:0.10, precipWarn:30 },
-  standard:    { label:'Standard',    windWarn:15, gustWarn:20, rateCap:0.15, precipWarn:40 },
-  experienced: { label:'Experienced', windWarn:20, gustWarn:26, rateCap:0.22, precipWarn:55 }
+  cautious:    { label:'Cautious',    windWarn:15, gustWarn:20, rateCap:0.10, precipWarn:30 },
+  standard:    { label:'Standard',    windWarn:18, gustWarn:24, rateCap:0.15, precipWarn:40 },
+  experienced: { label:'Experienced', windWarn:22, gustWarn:30, rateCap:0.22, precipWarn:55 }
 };
 let currentProfile = localStorage.getItem('kice-profile') || 'standard';
 
@@ -638,10 +638,10 @@ function paddleScoreForHour(point, rate, weather, sun, advisory, profile){
   // --- tide rate: gentler = better. Center on the slack. ---
   const absRate = Math.abs(rate) || 0;
   let rateScore = 1; // 1..0 as rate grows
-  if(absRate <= 0.2)        rateScore = 1.0;   // very slack
-  else if(absRate <= 0.5)   rateScore = 0.9;
-  else if(absRate <= 1.0)   rateScore = 0.7;
-  else if(absRate <= 2.0)   rateScore = 0.4;
+  if(absRate <= 0.5)        rateScore = 1.0;   // very slack
+  else if(absRate <= 1.0)   rateScore = 0.9;
+  else if(absRate <= 1.8)   rateScore = 0.7;
+  else if(absRate <= 2.8)   rateScore = 0.4;
   else                      rateScore = 0.1;   // ripping
   score += (rateScore - 0.5) * 24;            // -12 .. +12
 
@@ -652,7 +652,7 @@ function paddleScoreForHour(point, rate, weather, sun, advisory, profile){
     const windBlowingTo = (weather.dir + 180) % 360;
     const diff = angleDiff(windBlowingTo, flowTo);
     if(diff < 55){              score += 8;   // wind with current
-    }else if(diff > 125){       score -= 14;  // wind against current -> chop
+    }else if(diff > 125){       score -= 8;   // wind against current -> chop
     }
   }
 
@@ -660,16 +660,20 @@ function paddleScoreForHour(point, rate, weather, sun, advisory, profile){
   if(weather){
     const overWind = Math.max(0, weather.speed - profile.windWarn);
     const overGust = Math.max(0, weather.gust  - profile.gustWarn);
-    score -= overWind * 2.2;
-    score -= overGust * 1.6;
+    score -= overWind * 1.5;
+    score -= overGust * 1.0;
     if(weather.temp >= 92) score -= 3; // heat discomfort
   }
 
   // --- storm / advisory ---
-  if(advisory) score -= 45;
+  // Marine advisories (Small Craft Advisory etc.) are a caution, not a hard
+  // avoid - reduce the penalty so a SCA still scores viable windows.
+  if(advisory) score -= 10;
 
   // --- daylight penalty ---
-  score += (daylight - 1) * 22;            // -22 twilight, -44 night
+  // night = -22, twilight band = -12 (less harsh than before)
+  if(daylight === 0)      score -= 22;  // full night
+  else if(daylight === 0.6) score -= 12;  // twilight band
 
   // clamp to 0..100
   return Math.max(0, Math.min(100, Math.round(score)));
@@ -1053,7 +1057,7 @@ function renderDaily(selected, byDay, now, today){
             <div class="daily-best-label">Best window</div>
             <div class="daily-best-time">${fmtTime(tripPick.start)} – ${fmtTime(tripPick.end)}</div>
             <div class="daily-best-quality">${tripPick.score}/100 &middot; average Paddle Score across the window</div>
-            <div class="daily-best-status">Centered around high-score hours. Drag the trip-duration slider to re-optimize.</div>
+            <div class="daily-best-status">${generateTripReason(tripPick.score, bestHour, tripPick)}</div>
           </div>
           <div class="daily-best-card">
             <div class="daily-best-label">Peak hour</div>
@@ -1092,6 +1096,21 @@ function renderDaily(selected, byDay, now, today){
   document.getElementById('dailyForecast').innerHTML = heroCard + timelineHtml;
   // draw the tide curve canvas now that the DOM is in place
   drawTideChart(selected, hours, now);
+}
+
+function generateTripReason(score, bestHour, tripPick){
+  if(!bestHour || !tripPick) return 'No daylight data for this day.';
+  const avgWind = bestHour.weather ? Math.round(bestHour.weather.speed) : 0;
+  const hasAdvisory = !!bestHour.advisory;
+  const rate = Math.abs(bestHour.rate) || 0;
+
+  if(score >= 75 && !hasAdvisory && avgWind < 12)
+    return 'Great conditions! Tide is slack and winds are light.';
+  if(score >= 60 && avgWind < 16)
+    return 'Good conditions, but expect some chop. Bring a spray skirt.';
+  if(score >= 45)
+    return 'Moderate conditions - watch the tide and wind timing.';
+  return 'Challenging conditions today—only for experienced paddlers.';
 }
 
 function scoreReason(h){
